@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model PontoTuristico {
+  id            Int      @id @default(autoincrement())
+  titulo        String
+  slug          String   @unique
+  descricao     String
+  conteudo      String
+  imagem        String?
+  endereco      String?
+  categoria     String
+  publicado     Boolean  @default(true)
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  fotos         FotoPonto[]
+}
+
+model FotoPonto {
+  id                Int     @id @default(autoincrement())
+  url               String
+  legenda           String?
+  pontoTuristicoId  Int
+
+  pontoTuristico    PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
+}
