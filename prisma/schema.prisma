@@ -10,7 +10,7 @@ datasource db {
 model PontoTuristico {
   id            Int      @id @default(autoincrement())
   titulo        String
-  slug          String   @unique
+ 
   descricao     String
   conteudo      String
   imagem        String?
@@ -21,6 +21,7 @@ model PontoTuristico {
   atualizadoEm  DateTime @updatedAt
 
   fotos         FotoPonto[]
+  comentarios   Comentario[]
 }
 
 model FotoPonto {
@@ -30,4 +31,18 @@ model FotoPonto {
   pontoTuristicoId  Int
 
   pontoTuristico    PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
+}
+
+
+model Comentario {
+  id               Int      @id @default(autoincrement())
+  nome             String
+  cidade           String
+  nota             Int
+  comentario       String
+  aprovado Boolean @default(false)
+  criadoEm         DateTime @default(now())
+
+  pontoTuristicoId Int
+  pontoTuristico   PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
 }

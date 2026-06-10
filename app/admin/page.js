@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Pencil, Plus, Eye } from "lucide-react";
+import DeletePontoButton from "@/components/DeletePontoButton";
 
-export default async function AdmPage() {
+export default async function AdminPage() {
   const pontos = await prisma.pontoTuristico.findMany({
     orderBy: {
       criadoEm: "desc",
@@ -13,7 +14,7 @@ export default async function AdmPage() {
   });
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
+    <main className="p-8">
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -26,7 +27,7 @@ export default async function AdmPage() {
           </div>
 
           <Link
-            href="/adm/novo"
+            href="/admin/novo"
             className="flex items-center gap-2 rounded bg-green-700 px-4 py-3 font-semibold text-white hover:bg-green-800"
           >
             <Plus size={18} />
@@ -112,16 +113,14 @@ export default async function AdmPage() {
 
                   <td className="p-4">
                     <div className="flex gap-2">
-                      <Link
-                        href={`/adm/editar/${ponto.id}`}
-                        className="rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
-                      >
+                      <Link href={`/pontos/${ponto.id}`} target="_blank" className="flex items-center gap-1 rounded bg-gray-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+                        <Eye size={16}  />
+                      </Link>
+                      <Link href={`/admin/editar/${ponto.id}`} className="flex items-center gap-1 rounded bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700">
                         <Pencil size={16} />
                       </Link>
 
-                      <button className="rounded bg-red-600 p-2 text-white hover:bg-red-700">
-                        <Trash2 size={16} />
-                      </button>
+                     <DeletePontoButton id={ponto.id} />
                     </div>
                   </td>
                 </tr>
