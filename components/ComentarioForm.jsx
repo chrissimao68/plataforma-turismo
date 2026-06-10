@@ -11,9 +11,11 @@ export default function ComentarioForm({ pontoId }) {
 
   async function handleSubmit(formData) {
     setLoading(true);
+
+    formData.set("pontoId", String(pontoId));
     formData.set("nota", String(nota));
 
-    const result = await criarComentario(pontoId, formData);
+    const result = await criarComentario(formData);
 
     if (result?.error) {
       toast.error(result.error);
@@ -29,9 +31,9 @@ export default function ComentarioForm({ pontoId }) {
   }
 
   return (
-    <section className="mt-14 bg-white p-6 ">
+    <section className="mt-14 bg-white p-6 w-full">
       <h2 className="text-2xl font-bold text-green-900">
-        Deixe sua avaliação
+        Deixe Seu Comentário
       </h2>
 
       <p className="mt-2 text-gray-600">
@@ -100,7 +102,7 @@ export default function ComentarioForm({ pontoId }) {
             required
             rows={5}
             className="w-full rounded-xl border p-3 outline-none focus:border-green-700"
-            placeholder="Escreva sua opinião..."
+            placeholder="Escreva o que achou desse lugar..."
           />
         </div>
 

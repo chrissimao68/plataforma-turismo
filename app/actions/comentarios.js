@@ -1,17 +1,16 @@
 "use server";
 
+"use server";
+
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function criarComentario(pontoId, formData) {
+export async function criarComentario(formData) {
+  const pontoId = Number(formData.get("pontoId"));
   const nome = String(formData.get("nome") || "").trim();
   const cidade = String(formData.get("cidade") || "").trim();
   const nota = Number(formData.get("nota"));
   const comentario = String(formData.get("comentario") || "").trim();
-
-  if (!nome || !cidade || !comentario || nota < 1 || nota > 5) {
-    return { error: "Preencha todos os campos corretamente." };
-  }
 
   await prisma.comentario.create({
     data: {
@@ -19,14 +18,16 @@ export async function criarComentario(pontoId, formData) {
       cidade,
       nota,
       comentario,
-      aprovado: false, // Comentário precisa ser aprovado por um admin
-      pontoTuristicoId: Number(pontoId),
+      aprovado: false,
+      pontoTuristicoId: pontoId,
     },
   });
 
   revalidatePath(`/pontos/${pontoId}`);
-
-  return { success: "Comentário enviado! Ele será publicado após aprovação." };
+  
+  return {
+  success: "Comentário enviado. Aguarde aprovação do administrador.",
+};
 }
 
 
@@ -42,6 +43,9 @@ export async function aprovarComentario(id) {
 
   revalidatePath("/admin/comentarios");
   revalidatePath(`/pontos/${comentario.pontoTuristicoId}`);
+  return {
+  success: "Comentário aprovado com sucesso.",
+};
 }
 
 export async function excluirComentario(id) {
@@ -53,4 +57,7 @@ export async function excluirComentario(id) {
 
   revalidatePath("/admin/comentarios");
   revalidatePath(`/pontos/${comentario.pontoTuristicoId}`);
+  return {
+  success: "Comentário excluído com sucesso.", 
+};
 }

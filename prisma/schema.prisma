@@ -46,3 +46,12 @@ model Comentario {
   pontoTuristicoId Int
   pontoTuristico   PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
 }
+
+model Administrador {
+  id        Int      @id @default(autoincrement())
+  usuario  String   @unique
+  senha    String
+  aprovado Boolean  @default(false)
+  principal Boolean @default(false)
+  createdAt DateTime @default(now())
+}

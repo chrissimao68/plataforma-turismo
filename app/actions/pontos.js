@@ -3,17 +3,27 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { put } from "@vercel/blob";
 
 
 export async function criarPontoTuristico(formData) {
   const titulo = formData.get("titulo");
   const descricao = formData.get("descricao");
   const conteudo = formData.get("conteudo");
-  const imagem = formData.get("imagem");
   const endereco = formData.get("endereco");
   const categoria = formData.get("categoria");
 
-  const fotos = formData.getAll("fotos").filter(Boolean);
+  const imagemFile = formData.get("imagem");
+
+  let imagem = null;
+
+  if (imagemFile && imagemFile.size > 0) {
+    const blob = await put(imagemFile.name, imagemFile, {
+      access: "public",
+    });
+
+    imagem = blob.url;
+  }
 
   await prisma.pontoTuristico.create({
     data: {
@@ -24,11 +34,6 @@ export async function criarPontoTuristico(formData) {
       endereco,
       categoria,
       publicado: true,
-      fotos: {
-        create: fotos.map((url) => ({
-          url,
-        })),
-      },
     },
   });
 

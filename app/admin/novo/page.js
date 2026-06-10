@@ -10,6 +10,7 @@ export default function NovoPontoPage() {
 
         <form action={criarPontoTuristico} className="space-y-4">
           <input
+
             name="titulo"
             placeholder="Título do local"
             required
@@ -33,6 +34,8 @@ export default function NovoPontoPage() {
 
           <input
             name="imagem"
+             type="file"
+                accept="image/*"
             placeholder="URL da imagem principal"
             className="w-full rounded border p-3"
           />
@@ -59,17 +62,22 @@ export default function NovoPontoPage() {
           <div className="space-y-2">
             <p className="font-semibold">Galeria de fotos</p>
 
-            <input name="fotos" placeholder="URL da foto 1" className="w-full rounded border p-3" />
-            <input name="fotos" placeholder="URL da foto 2" className="w-full rounded border p-3" />
-            <input name="fotos" placeholder="URL da foto 3" className="w-full rounded border p-3" />
-            <input name="fotos" placeholder="URL da foto 4" className="w-full rounded border p-3" />
+            <input name="fotos"
+                    type="file"
+                accept="image/*" className="w-full rounded border p-3" />
+            <input name="fotos" type="file"
+                accept="image/*" placeholder="URL da foto 2" className="w-full rounded border p-3" />
+            <input name="fotos" type="file"
+                accept="image/*" placeholder="URL da foto 3" className="w-full rounded border p-3" />
+            <input name="fotos" type="file"
+                accept="image/*" placeholder="URL da foto 4" className="w-full rounded border p-3" />
           </div>
 
           <button
             type="submit"
             className="rounded bg-green-700 px-6 py-3 font-semibold text-white hover:bg-green-800"
           >
-            Criar página
+            Criar Página
           </button>
         </form>
       </div>

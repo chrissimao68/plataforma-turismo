@@ -9,6 +9,7 @@ import {
   Hotel,
   Trees,
   MessageCircle,
+  Users,
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -24,11 +25,16 @@ export default function AdminSidebar() {
           <LayoutDashboard size={20} />
           Dashboard
         </Link>
+        
 
         <Link href="/admin/novo" className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-800">
           <Plus size={20} />
           Novo ponto turístico
         </Link>
+        <Link href="/admin/administradores" className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-800">
+  <Users size={18} />
+  Administradores
+</Link>
 
         <Link href="/admin/pontos" className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-800">
           <MapPin size={20} />
