@@ -56,16 +56,13 @@ export default async function HomePage() {
   ];
 
   return (
-    <main className="bg-gray-50">
-      <section className="relative overflow-hidden bg-green-950 text-white  bg-[url('/fotodecapa.png')] bg-cover bg-center">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.35),transparent_35%)]" />
+    <main className="bg-white">
+      <section className="  text-white h-178  bg-[url('/capa01.png')] bg-cover bg-center">
+        <div className="" />
 
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2 lg:items-center">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-green-100">
-              <MapPin size={16} />
-              Portal turístico de Lavras - MG
-            </span>
+        <div className=" grid w-[80%]  gap-20 px-6 py-10 mx-auto lg:grid-cols-2 lg:items-center">
+          <div className="  w-full flex flex-col gap-10">
+            
 
             <h1 className="mt-6 text-5xl font-extrabold leading-tight md:text-6xl">
               Descubra Lavras além do caminho comum.
@@ -94,8 +91,8 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="rounded-3xl bg-white/10 p-4 shadow-2xl backdrop-blur">
-            <div className="h-96 rounded-2x bg-cover bg-center bg-[url('/logotransparentefundo.png')] " />
+          <div className="rounded-full bg-white/5 w-full h-full ">
+            <div className="h-130 bg-contain bg-center bg-no-repeat bg-[url('/logotransparentefundo2.png')] " />
            
           </div>
         </div>

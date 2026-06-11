@@ -8,9 +8,12 @@ export default function NovoPontoPage() {
           Criar Ponto Turístico
         </h1>
 
-        <form action={criarPontoTuristico} className="space-y-4">
+        <form
+          action={criarPontoTuristico}
+         
+          className="space-y-4"
+        >
           <input
-
             name="titulo"
             placeholder="Título do local"
             required
@@ -32,13 +35,18 @@ export default function NovoPontoPage() {
             className="w-full rounded border p-3"
           />
 
-          <input
-            name="imagem"
-             type="file"
-                accept="image/*"
-            placeholder="URL da imagem principal"
-            className="w-full rounded border p-3"
-          />
+          <div>
+            <label className="mb-2 block font-semibold">
+              Imagem principal
+            </label>
+            <input
+              name="imagem"
+              type="file"
+              accept="image/*"
+              required
+              className="w-full rounded border p-3"
+            />
+          </div>
 
           <input
             name="endereco"
@@ -59,18 +67,48 @@ export default function NovoPontoPage() {
             <option value="EVENTOS">Eventos</option>
           </select>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             <p className="font-semibold">Galeria de fotos</p>
 
-            <input name="fotos"
-                    type="file"
-                accept="image/*" className="w-full rounded border p-3" />
-            <input name="fotos" type="file"
-                accept="image/*" placeholder="URL da foto 2" className="w-full rounded border p-3" />
-            <input name="fotos" type="file"
-                accept="image/*" placeholder="URL da foto 3" className="w-full rounded border p-3" />
-            <input name="fotos" type="file"
-                accept="image/*" placeholder="URL da foto 4" className="w-full rounded border p-3" />
+            <input
+              name="fotos"
+              type="file"
+              accept="image/*"
+              className="w-full rounded border p-3"
+            />
+
+            <input
+              name="fotos"
+              type="file"
+              accept="image/*"
+              className="w-full rounded border p-3"
+            />
+
+            <input
+              name="fotos"
+              type="file"
+              accept="image/*"
+              className="w-full rounded border p-3"
+            />
+
+            <input
+              name="fotos"
+              type="file"
+              accept="image/*"
+              className="w-full rounded border p-3"
+            />
+             <input
+              name="fotos"
+              type="file"
+              accept="image/*"
+              className="w-full rounded border p-3"
+            />
+             <input
+              name="fotos"
+              type="file"
+              accept="image/*"
+              className="w-full rounded border p-3"
+            />
           </div>
 
           <button
