@@ -12,15 +12,22 @@ import {
 } from "lucide-react";
 
 export default async function HomePage() {
-  const pontos = await prisma.pontoTuristico.findMany({
-    where: {
-      publicado: true,
+ const pontos = await prisma.pontoTuristico.findMany({
+  where: {
+    publicado: true,
+  },
+  orderBy: {
+    criadoEm: "desc",
+  },
+  take: 3,
+  include: {
+    comentarios: {
+      where: {
+        aprovado: true,
+      },
     },
-    orderBy: {
-      criadoEm: "desc",
-    },
-    take: 6,
-  });
+  },
+});
 
   const categorias = [
     {

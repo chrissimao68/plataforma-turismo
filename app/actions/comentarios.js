@@ -1,9 +1,15 @@
 "use server";
 
-"use server";
-
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+
+function revalidarCategoria(categoria) {
+  if (!categoria) return;
+
+  const slug = categoria.toLowerCase();
+
+  revalidatePath(`/${slug}`);
+}
 
 export async function criarComentario(formData) {
   const pontoId = Number(formData.get("pontoId"));
@@ -11,6 +17,15 @@ export async function criarComentario(formData) {
   const cidade = String(formData.get("cidade") || "").trim();
   const nota = Number(formData.get("nota"));
   const comentario = String(formData.get("comentario") || "").trim();
+
+  const ponto = await prisma.pontoTuristico.findUnique({
+    where: {
+      id: pontoId,
+    },
+    select: {
+      categoria: true,
+    },
+  });
 
   await prisma.comentario.create({
     data: {
@@ -24,12 +39,15 @@ export async function criarComentario(formData) {
   });
 
   revalidatePath(`/pontos/${pontoId}`);
-  
-  return {
-  success: "Comentário enviado. Aguarde aprovação do administrador.",
-};
-}
 
+  if (ponto?.categoria) {
+    revalidarCategoria(ponto.categoria);
+  }
+
+  return {
+    success: "Comentário enviado. Aguarde aprovação do administrador.",
+  };
+}
 
 export async function aprovarComentario(id) {
   const comentario = await prisma.comentario.update({
@@ -39,13 +57,25 @@ export async function aprovarComentario(id) {
     data: {
       aprovado: true,
     },
+    include: {
+      pontoTuristico: {
+        select: {
+          categoria: true,
+        },
+      },
+    },
   });
 
   revalidatePath("/admin/comentarios");
   revalidatePath(`/pontos/${comentario.pontoTuristicoId}`);
+
+  if (comentario.pontoTuristico?.categoria) {
+    revalidarCategoria(comentario.pontoTuristico.categoria);
+  }
+
   return {
-  success: "Comentário aprovado com sucesso.",
-};
+    success: "Comentário aprovado com sucesso.",
+  };
 }
 
 export async function excluirComentario(id) {
@@ -53,11 +83,23 @@ export async function excluirComentario(id) {
     where: {
       id: Number(id),
     },
+    include: {
+      pontoTuristico: {
+        select: {
+          categoria: true,
+        },
+      },
+    },
   });
 
   revalidatePath("/admin/comentarios");
   revalidatePath(`/pontos/${comentario.pontoTuristicoId}`);
+
+  if (comentario.pontoTuristico?.categoria) {
+    revalidarCategoria(comentario.pontoTuristico.categoria);
+  }
+
   return {
-  success: "Comentário excluído com sucesso.", 
-};
+    success: "Comentário excluído com sucesso.",
+  };
 }

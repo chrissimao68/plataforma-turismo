@@ -1,23 +1,33 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { excluirPonto } from "@/app/actions/pontos";
 import { toast } from "sonner";
+import { excluirPonto } from "@/app/actions/pontos";
 
 export default function DeletePontoButton({ id }) {
-  async function handleDelete() {
-    const confirmou = confirm("Tem certeza que deseja excluir este ponto turístico?");
-
-    if (!confirmou) return;
-
-    await excluirPonto(id);
-    toast.success("Ponto turístico excluído com sucesso.");
+  function confirmarExclusao() {
+    toast.warning("Excluir ponto turístico?", {
+      description: "Essa ação não poderá ser desfeita.",
+      action: {
+        label: "Excluir",
+        onClick: async () => {
+          await excluirPonto(id);
+          toast.success("Ponto turístico excluído com sucesso!");
+        },
+      },
+      cancel: {
+        label: "Cancelar",
+        onClick: () => {
+          toast.info("Exclusão cancelada.");
+        },
+      },
+    });
   }
 
   return (
     <button
       type="button"
-      onClick={handleDelete}
+      onClick={confirmarExclusao}
       className="flex items-center gap-1 rounded bg-red-600 px-3 py-2 text-sm font-semibold text-white hover:bg-red-700">
                             
       <Trash2 size={16} />

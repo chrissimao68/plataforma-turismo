@@ -1,11 +1,23 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 
 export default function CardPonto({ ponto }) {
+  const totalComentarios = ponto.comentarios?.length || 0;
+
+  const media =
+    totalComentarios > 0
+      ? (
+          ponto.comentarios.reduce(
+            (acc, comentario) => acc + comentario.nota,
+            0
+          ) / totalComentarios
+        ).toFixed(1)
+      : null;
+
   return (
     <Link
       href={`/pontos/${ponto.id}`}
-      className="group overflow-hidden rounded-xl bg-white shadow hover:shadow-lg transition"
+      className="group overflow-hidden rounded-xl bg-white shadow transition hover:shadow-lg"
     >
       {ponto.imagem ? (
         <img
@@ -37,6 +49,23 @@ export default function CardPonto({ ponto }) {
             <MapPin size={16} />
             {ponto.endereco}
           </p>
+        )}
+
+        {media && (
+          <div className="mt-4 flex items-center gap-2">
+            <Star
+              size={16}
+              className="fill-yellow-400 text-yellow-400"
+            />
+
+            <span className="font-semibold text-gray-800">
+              {media}
+            </span>
+
+            <span className="text-sm text-gray-500">
+              ({totalComentarios} avaliações)
+            </span>
+          </div>
         )}
       </div>
     </Link>

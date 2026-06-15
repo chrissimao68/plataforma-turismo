@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 model PontoTuristico {
   id            Int      @id @default(autoincrement())
   titulo        String
@@ -24,6 +26,10 @@ model PontoTuristico {
   comentarios   Comentario[]
 }
 
+
+
+
+
 model FotoPonto {
   id                Int     @id @default(autoincrement())
   url               String
@@ -32,6 +38,8 @@ model FotoPonto {
 
   pontoTuristico    PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
 }
+
+
 
 
 model Comentario {
@@ -46,6 +54,9 @@ model Comentario {
   pontoTuristicoId Int
   pontoTuristico   PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
 }
+
+
+
 
 model Administrador {
   id        Int      @id @default(autoincrement())

@@ -60,11 +60,11 @@ export default function NovoPontoPage() {
             className="w-full rounded border p-3"
           >
             <option value="">Selecione a categoria</option>
-            <option value="CULTURA">Cultura</option>
-            <option value="NATUREZA">Natureza</option>
-            <option value="HOSPEDAGEM">Hospedagem</option>
-            <option value="GASTRONOMIA">Gastronomia</option>
-            <option value="EVENTOS">Eventos</option>
+            <option value="CULTURA">CULTURA</option>
+            <option value="NATUREZA">NATUREZA</option>
+            <option value="HOSPEDAGEM">HOSPEDAGEM</option>
+            <option value="GASTRONOMIA">GASTRONOMIA</option>
+            <option value="EVENTOS">EVENTOS</option>
           </select>
 
           <div className="space-y-3">
