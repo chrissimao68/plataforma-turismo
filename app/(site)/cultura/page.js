@@ -44,7 +44,7 @@ export default async function CulturaPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <section className="relative h-[360px] bg-[url('/cultura-banner.jpg')] bg-cover bg-center">
+      <section className="relative h-[460px] bg-[url('/cultucapa.jpg')] bg-cover bg-center">
         <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center px-6 text-white">
@@ -62,8 +62,8 @@ export default async function CulturaPage() {
         </div>
       </section>
 
-      <section className="mx-auto -mt-12 max-w-6xl px-6">
-        <div className="grid gap-4 rounded-2xl bg-white p-6 shadow md:grid-cols-4">
+      <section className="relative z-20 mx-auto -mt-14 max-w-6xl px-6">
+        <div className="grid grid-cols-4 justify-items-center rounded-2xl bg-white p-6 shadow md:grid-cols-4">
           <div className="flex items-center gap-4">
             <Landmark className="text-green-700" />
             <div>

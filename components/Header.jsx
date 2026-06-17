@@ -23,9 +23,9 @@ export default function Header() {
         />
           <div>
             <h1 className="text-xl font-bold text-green-800">
-              Lavras Turismo
+               Encantos de Lavras 
             </h1>
-            <p className="text-xs text-gray-500">Descubra Lavras</p>
+            <p className="text-xs text-gray-500">Plataforma de Turismo</p>
           </div>
         </Link>
 
@@ -58,7 +58,7 @@ export default function Header() {
 
         <Link
           href="/login"
-          className="flex items-center gap-2 rounded-xl border border-green-700 px-4 py-2 font-semibold text-green-700 transition hover:bg-green-700 hover:text-white"
+          className="flex items-center gap-2 rounded-lg border border-green-700 px-8 py-2 font-semibold text-green-700 transition hover:bg-green-700 hover:text-white"
         >
           <ShieldUser size={18} />
           Login ADM
