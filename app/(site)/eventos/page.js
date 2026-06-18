@@ -140,6 +140,11 @@ export default async function EventosPage() {
           Explore os pontos de eventos cadastrados em Lavras.
         </p>
 
+{/* Meu CARD modelo  */}
+
+
+
+
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {pontos.map((ponto) => (
             <CardPonto key={ponto.id} ponto={ponto} />

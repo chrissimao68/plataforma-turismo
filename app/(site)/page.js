@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import CardPonto from "@/components/CardPonto";
+import ModeloModal from "@/components/conhecamodal";
 import {
   
   Trees,
@@ -91,9 +92,14 @@ export default async function HomePage() {
           <div className="  w-full flex flex-col gap-10 ">
             
 
-            <h1 className="mt-6 text-6xl font-extrabold  md:text-7xl">
-              Conheça Lavras além do caminho comum.
+            <h1 className="mt-15 text-6xl font-extrabold  md:text-7xl">
+              Conheça Lavras 
             </h1>
+
+            <h3 className="mt-3 text-3xl font-extrabold  md:text-3xl">
+              Entre serras, sabores e letras.
+            </h3>
+
 
             <p className="mt-6 max-w-xl text-lg leading-7 text-green-100">
               Explore pontos turísticos, natureza, cultura, gastronomia,
@@ -102,19 +108,14 @@ export default async function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/natureza"
-                className="rounded-xl bg-white px-6 py-3 font-bold text-green-800 hover:bg-green-100"
-              >
-                Explorar agora
-              </Link>
 
-              <Link
-                href="/cultura"
-                className="rounded-xl border border-white/30 px-6 py-3 font-bold text-white hover:bg-white/10"
+              <button
+                className="rounded-xl bg-white px-5 py-3 font-bold text-green-800 hover:bg-green-100"
               >
-                Ver cultura
-              </Link>
+                 Planeje sua Viagem!
+              </button>
+
+              <ModeloModal> </ModeloModal>
             </div>
           </div>
 
@@ -161,7 +162,6 @@ export default async function HomePage() {
                 group-hover:scale-120
               "
             />
-
             {/* overlay */}
 
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/10" />
