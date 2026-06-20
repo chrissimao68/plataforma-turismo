@@ -2,8 +2,8 @@ import AdministradoresForm from "@/components/AdministradoresForm";
 
 export default function AdministradoresPage() {
   return (
-    <main className="p-8">
-      <div className="mx-auto max-w-6xl">
+    <main className="w-full">
+      <div className="mx-auto w-[90%] py-10">
         <AdministradoresForm />
       </div>
     </main>

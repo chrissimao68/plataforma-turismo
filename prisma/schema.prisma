@@ -64,5 +64,5 @@ model Administrador {
   senha    String
   aprovado Boolean  @default(false)
   principal Boolean @default(false)
-  createdAt DateTime @default(now())
+  criadoEm DateTime @default(now())
 }

@@ -111,7 +111,7 @@ export default async function HomePage() {
             <div className="mt-8 flex flex-wrap gap-4">
 
               <button
-                className="rounded-xl bg-white px-5 py-3 font-bold text-green-800 hover:bg-green-100"
+                className="rounded-lg bg-white px-5 py-3 font-bold text-green-800 hover:bg-green-100"
               >
                  Planeje sua Viagem!
               </button>
