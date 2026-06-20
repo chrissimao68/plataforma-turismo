@@ -15,7 +15,7 @@ export default function Footer() {
           {/* Logo */}
           <div>
             <h2 className="text-3xl font-bold">
-              Lavras Turismo
+              Encantos de Lavras
             </h2>
 
             <p className="mt-4 text-sm leading-7 text-green-100">
@@ -40,9 +40,7 @@ export default function Footer() {
                 <Link href="/">Sobre</Link>
               </li>
 
-              <li>
-                <Link href="/cultura">Cultura</Link>
-              </li>
+             
 
               <li>
                 <Link href="/eventos">Eventos</Link>
@@ -101,7 +99,7 @@ export default function Footer() {
 
               <li className="flex gap-3">
                 <Mail size={18} />
-                contato@lavrasturismo.com.br
+                contato@encantosdelavras.com.br
               </li>
             </ul>
 

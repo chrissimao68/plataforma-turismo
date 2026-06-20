@@ -18,6 +18,18 @@ export async function criarComentario(formData) {
   const nota = Number(formData.get("nota"));
   const comentario = String(formData.get("comentario") || "").trim();
 
+  if (!pontoId || !nome || !cidade || !nota || !comentario) {
+  return {
+    error: "Preencha todos os campos.",
+  };
+}
+
+if (nota < 1 || nota > 5) {
+  return {
+    error: "A nota deve ser entre 1 e 5.",
+  };
+}
+
   const ponto = await prisma.pontoTuristico.findUnique({
     where: {
       id: pontoId,
@@ -38,7 +50,9 @@ export async function criarComentario(formData) {
     },
   });
 
-  revalidatePath(`/pontos/${pontoId}`);
+  revalidatePath("/admin/comentarios");
+revalidatePath("/admin");
+revalidatePath(`/pontos/${pontoId}`);
 
   if (ponto?.categoria) {
     revalidarCategoria(ponto.categoria);

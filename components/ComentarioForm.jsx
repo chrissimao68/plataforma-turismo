@@ -9,9 +9,10 @@ export default function ComentarioForm({ pontoId }) {
   const [nota, setNota] = useState(5);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(formData) {
-    setLoading(true);
+ async function handleSubmit(formData) {
+  setLoading(true);
 
+  try {
     formData.set("pontoId", String(pontoId));
     formData.set("nota", String(nota));
 
@@ -19,6 +20,7 @@ export default function ComentarioForm({ pontoId }) {
 
     if (result?.error) {
       toast.error(result.error);
+      return;
     }
 
     if (result?.success) {
@@ -26,10 +28,10 @@ export default function ComentarioForm({ pontoId }) {
       document.getElementById("comentario-form")?.reset();
       setNota(5);
     }
-
+  } finally {
     setLoading(false);
   }
-
+}
   return (
     <section className="mt-14 bg-white  w-full">
       <h2 className="text-2xl font-bold text-green-900">

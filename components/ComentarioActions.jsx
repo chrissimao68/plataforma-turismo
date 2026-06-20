@@ -2,23 +2,42 @@
 
 import { Check, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import {
   aprovarComentario,
   excluirComentario,
 } from "@/app/actions/comentarios";
 
 export default function ComentarioActions({ id, aprovado }) {
+  const router = useRouter();
+
   async function handleAprovar() {
-    await aprovarComentario(id);
-    toast.success("Comentário aprovado e publicado.");
+    const result = await aprovarComentario(id);
+
+    if (result?.success) {
+      toast.success(result.success);
+      router.refresh();
+    }
+
+    if (result?.error) {
+      toast.error(result.error);
+    }
   }
 
   async function handleExcluir() {
     const confirmar = confirm("Deseja excluir este comentário?");
     if (!confirmar) return;
 
-    await excluirComentario(id);
-    toast.success("Comentário excluído.");
+    const result = await excluirComentario(id);
+
+    if (result?.success) {
+      toast.success(result.success);
+      router.refresh();
+    }
+
+    if (result?.error) {
+      toast.error(result.error);
+    }
   }
 
   return (
