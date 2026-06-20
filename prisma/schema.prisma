@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model PontoTuristico {
+  id            Int      @id @default(autoincrement())
+  titulo        String
+ 
+  descricao     String
+  conteudo      String
+  imagem        String?
+  endereco      String?
+  categoria     String
+  publicado     Boolean  @default(true)
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  fotos         FotoPonto[]
+  comentarios   Comentario[]
+}
+
+
+
+
+
+model FotoPonto {
+  id                Int     @id @default(autoincrement())
+  url               String
+  legenda           String?
+  pontoTuristicoId  Int
+
+  pontoTuristico    PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
+}
+
+
+
+
+model Comentario {
+  id               Int      @id @default(autoincrement())
+  nome             String
+  cidade           String
+  nota             Int
+  comentario       String
+  aprovado Boolean @default(false)
+  criadoEm         DateTime @default(now())
+
+  pontoTuristicoId Int
+  pontoTuristico   PontoTuristico @relation(fields: [pontoTuristicoId], references: [id], onDelete: Cascade)
+}
+
+
+
+
+model Administrador {
+  id        Int      @id @default(autoincrement())
+  usuario  String   @unique
+  senha    String
+  aprovado Boolean  @default(false)
+  principal Boolean @default(false)
+  createdAt DateTime @default(now())
+}
