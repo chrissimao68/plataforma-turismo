@@ -30,11 +30,8 @@ export default async function PontoPage({ params }) {
  
 
   return (
-<<<<<<< HEAD
     <main className="mx-auto max-w-6xl py-10">
-=======
-    <main className="mx-auto max-w-6xl p-6">
->>>>>>> 82d02ba2fc1b42e990f1e06f7fae1e1f051ce55a
+   
       <section className="overflow-hidden rounded-2xl bg-white shadow">
         {ponto.imagem && (
           <img
@@ -44,11 +41,9 @@ export default async function PontoPage({ params }) {
           />
         )}
 
-<<<<<<< HEAD
         <div className="py-10">
-=======
-        <div className="p-8">
->>>>>>> 82d02ba2fc1b42e990f1e06f7fae1e1f051ce55a
+        
+
           <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
             {ponto.categoria}
           </span>

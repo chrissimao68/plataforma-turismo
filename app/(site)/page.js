@@ -74,11 +74,8 @@ export default async function HomePage() {
   {
     titulo: "Hospedagem",
     descricao: "Hotéis, pousadas, conforto e outros.",
-<<<<<<< HEAD
+
     href: "/hospedagem",
-=======
-    href: "/hospecapa.jpg",
->>>>>>> 82d02ba2fc1b42e990f1e06f7fae1e1f051ce55a
     imagem: "/hospecapa.jpg",
     cor: "bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700",
     corIcone: "text-white bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700",
