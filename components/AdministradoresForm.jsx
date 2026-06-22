@@ -16,9 +16,7 @@ export default async function AdministradoresForm() {
     },
   });
 
-  const aprovados = administradores.filter(
-    (admin) => admin.aprovado
-  ).length;
+  const aprovados = administradores.filter((admin) => admin.aprovado).length;
 
   const pendentes = administradores.length - aprovados;
 
@@ -48,40 +46,28 @@ export default async function AdministradoresForm() {
         <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-zinc-200">
           <div className="flex items-center gap-3">
             <Shield className="text-blue-600" />
-            <span className="font-medium text-zinc-600">
-              Total
-            </span>
+            <span className="font-medium text-zinc-600">Total</span>
           </div>
 
-          <p className="mt-3 text-3xl font-bold">
-            {administradores.length}
-          </p>
+          <p className="mt-3 text-3xl font-bold">{administradores.length}</p>
         </div>
 
         <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-zinc-200">
           <div className="flex items-center gap-3">
             <UserCheck className="text-green-600" />
-            <span className="font-medium text-zinc-600">
-              Aprovados
-            </span>
+            <span className="font-medium text-zinc-600">Aprovados</span>
           </div>
 
-          <p className="mt-3 text-3xl font-bold">
-            {aprovados}
-          </p>
+          <p className="mt-3 text-3xl font-bold">{aprovados}</p>
         </div>
 
         <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-zinc-200">
           <div className="flex items-center gap-3">
             <Clock className="text-yellow-600" />
-            <span className="font-medium text-zinc-600">
-              Pendentes
-            </span>
+            <span className="font-medium text-zinc-600">Pendentes</span>
           </div>
 
-          <p className="mt-3 text-3xl font-bold">
-            {pendentes}
-          </p>
+          <p className="mt-3 text-3xl font-bold">{pendentes}</p>
         </div>
       </div>
 
@@ -93,25 +79,18 @@ export default async function AdministradoresForm() {
               <th className="px-6 py-4">Usuário</th>
               <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4">Criado em</th>
-              <th className="px-6 py-4 text-right">
-                Ações
-              </th>
+              <th className="px-6 py-4 text-right">Ações</th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-zinc-100">
             {administradores.map((admin) => (
-              <tr
-                key={admin.id}
-                className="transition hover:bg-zinc-50"
-              >
+              <tr key={admin.id} className="transition hover:bg-zinc-50">
                 {/* Usuário */}
                 <td className="px-6 py-5">
                   <div className="flex items-center gap-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-emerald-600 font-bold text-white">
-                      {admin.usuario
-                        ?.charAt(0)
-                        .toUpperCase()}
+                      {admin.usuario?.charAt(0).toUpperCase()}
                     </div>
 
                     <div>
@@ -119,9 +98,7 @@ export default async function AdministradoresForm() {
                         {admin.usuario}
                       </p>
 
-                      <p className="text-sm text-zinc-500">
-                        Administrador
-                      </p>
+                      <p className="text-sm text-zinc-500">Administrador</p>
                     </div>
                   </div>
                 </td>
@@ -144,9 +121,7 @@ export default async function AdministradoresForm() {
                 {/* Data */}
                 <td className="px-6 py-5 text-zinc-500">
                   {admin.criadoEm
-                    ? new Date(
-                        admin.criadoEm
-                      ).toLocaleDateString("pt-BR")
+                    ? new Date(admin.criadoEm).toLocaleDateString("pt-BR")
                     : "-"}
                 </td>
 
@@ -154,12 +129,7 @@ export default async function AdministradoresForm() {
                 <td className="px-6 py-5">
                   <div className="flex justify-end gap-2">
                     {!admin.aprovado && (
-                      <form
-                        action={aprovarAdmin.bind(
-                          null,
-                          admin.id
-                        )}
-                      >
+                      <form action={aprovarAdmin.bind(null, admin.id)}>
                         <button className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
                           <CheckCircle size={16} />
                           Aceitar
@@ -167,12 +137,7 @@ export default async function AdministradoresForm() {
                       </form>
                     )}
 
-                    <form
-                      action={excluirAdmin.bind(
-                        null,
-                        admin.id
-                      )}
-                    >
+                    <form action={excluirAdmin.bind(null, admin.id)}>
                       <button className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-600 hover:text-white">
                         <Trash2 size={16} />
                         Excluir

@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-
 export async function loginAdmin(formData) {
   const usuario = formData.get("usuario");
   const senha = formData.get("senha");
@@ -28,15 +27,13 @@ export async function loginAdmin(formData) {
     },
   });
 
-  if (admin) {
-    redirect("/admin");
-  }
+  revalidatePath("/admin/administradores");
+  revalidatePath("/admin");
 
   return {
     error: "Usuário inválido ou aguardando aprovação.",
   };
 }
-
 
 export async function cadastrarAdmin(formData) {
   const usuario = formData.get("usuario");
