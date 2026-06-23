@@ -5,10 +5,14 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 export async function loginAdmin(formData) {
-  const usuario = formData.get("usuario");
-  const senha = formData.get("senha");
+  const usuario = String(formData.get("usuario") || "").trim();
+  const senha = String(formData.get("senha") || "").trim();
 
-  // SUPER ADMIN (.env)
+  if (!usuario || !senha) {
+    return {
+      error: "Preencha usuário e senha.",
+    };
+  }
 
   if (
     usuario === process.env.ADMIN_USER &&
@@ -16,8 +20,6 @@ export async function loginAdmin(formData) {
   ) {
     redirect("/admin");
   }
-
-  // ADM CADASTRADO
 
   const admin = await prisma.administrador.findFirst({
     where: {
@@ -27,8 +29,9 @@ export async function loginAdmin(formData) {
     },
   });
 
-  revalidatePath("/admin/administradores");
-  revalidatePath("/admin");
+  if (admin) {
+    redirect("/admin");
+  }
 
   return {
     error: "Usuário inválido ou aguardando aprovação.",
@@ -36,8 +39,8 @@ export async function loginAdmin(formData) {
 }
 
 export async function cadastrarAdmin(formData) {
-  const usuario = formData.get("usuario");
-  const senha = formData.get("senha");
+  const usuario = String(formData.get("usuario") || "").trim();
+  const senha = String(formData.get("senha") || "").trim();
 
   if (!usuario || !senha || usuario.length < 5 || senha.length < 5) {
     return {
@@ -46,7 +49,9 @@ export async function cadastrarAdmin(formData) {
   }
 
   const existe = await prisma.administrador.findUnique({
-    where: { usuario },
+    where: {
+      usuario,
+    },
   });
 
   if (existe) {
@@ -64,6 +69,8 @@ export async function cadastrarAdmin(formData) {
   });
 
   revalidatePath("/admin");
+  revalidatePath("/admin/administradores");
+  revalidatePath("/login");
 
   return {
     success: "Cadastro enviado. Aguarde aprovação do administrador.",
@@ -72,19 +79,33 @@ export async function cadastrarAdmin(formData) {
 
 export async function aprovarAdmin(id) {
   await prisma.administrador.update({
-    where: { id },
+    where: {
+      id: Number(id),
+    },
     data: {
       aprovado: true,
     },
   });
 
   revalidatePath("/admin");
+  revalidatePath("/admin/administradores");
+
+  return {
+    success: "Administrador aprovado com sucesso.",
+  };
 }
 
 export async function excluirAdmin(id) {
   await prisma.administrador.delete({
-    where: { id },
+    where: {
+      id: Number(id),
+    },
   });
 
   revalidatePath("/admin");
+  revalidatePath("/admin/administradores");
+
+  return {
+    success: "Administrador excluído com sucesso.",
+  };
 }
