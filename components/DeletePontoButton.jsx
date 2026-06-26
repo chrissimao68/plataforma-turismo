@@ -8,13 +8,24 @@ export default function DeletePontoButton({ id }) {
   function confirmarExclusao() {
     toast.warning("Excluir ponto turístico?", {
       description: "Essa ação não poderá ser desfeita.",
+
       action: {
         label: "Excluir",
         onClick: async () => {
-          await excluirPonto(id);
-          toast.success("Ponto turístico excluído com sucesso!");
+          try {
+            await excluirPonto(id);
+
+            toast.success(
+              "Ponto turístico excluído com sucesso!"
+            );
+          } catch (error) {
+            toast.error(
+              "Erro ao excluir o ponto turístico."
+            );
+          }
         },
       },
+
       cancel: {
         label: "Cancelar",
         onClick: () => {
@@ -28,8 +39,21 @@ export default function DeletePontoButton({ id }) {
     <button
       type="button"
       onClick={confirmarExclusao}
-      className="flex items-center gap-1 rounded bg-red-600 px-3 py-2 text-sm font-semibold text-white hover:bg-red-700">
-                            
+      className="
+        flex items-center gap-2
+        rounded-lg
+        bg-red-600
+        px-3 py-2
+        text-sm font-semibold
+        text-white
+        shadow-sm
+        transition-all
+        hover:bg-red-700
+        hover:shadow-md
+        active:scale-95
+      "
+      title="Excluir ponto turístico"
+    >
       <Trash2 size={16} />
     </button>
   );

@@ -42,7 +42,13 @@ export async function cadastrarAdmin(formData) {
   const usuario = String(formData.get("usuario") || "").trim();
   const senha = String(formData.get("senha") || "").trim();
 
-  if (!usuario || !senha || usuario.length < 5 || senha.length < 5) {
+  if (!usuario || !senha) {
+    return {
+      error: "Preencha usuário e senha.",
+    };
+  }
+
+  if (usuario.length < 5 || senha.length < 5) {
     return {
       error: "Usuário e senha precisam ter no mínimo 5 caracteres.",
     };
@@ -78,9 +84,17 @@ export async function cadastrarAdmin(formData) {
 }
 
 export async function aprovarAdmin(id) {
+  const adminId = Number(id);
+
+  if (Number.isNaN(adminId)) {
+    return {
+      error: "Administrador inválido.",
+    };
+  }
+
   await prisma.administrador.update({
     where: {
-      id: Number(id),
+      id: adminId,
     },
     data: {
       aprovado: true,
@@ -96,9 +110,17 @@ export async function aprovarAdmin(id) {
 }
 
 export async function excluirAdmin(id) {
+  const adminId = Number(id);
+
+  if (Number.isNaN(adminId)) {
+    return {
+      error: "Administrador inválido.",
+    };
+  }
+
   await prisma.administrador.delete({
     where: {
-      id: Number(id),
+      id: adminId,
     },
   });
 

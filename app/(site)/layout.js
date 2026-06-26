@@ -9,9 +9,11 @@ const catamaran = Catamaran({
 
 export default function SiteLayout({ children }) {
   return (
-    <div className={catamaran.className}>
+    <div className={`${catamaran.className} min-h-screen bg-white text-zinc-900`}>
       <Header />
-      {children}
+
+      <main>{children}</main>
+
       <Footer />
     </div>
   );

@@ -2,6 +2,13 @@ import { prisma } from "@/lib/prisma";
 import { editarPonto } from "@/app/actions/pontos";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import {
+  ArrowLeft,
+  FileText,
+  Image as ImageIcon,
+  MapPin,
+  Save,
+} from "lucide-react";
 
 export default async function EditarPontoPage({ params }) {
   const { id } = await params;
@@ -27,104 +34,146 @@ export default async function EditarPontoPage({ params }) {
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
-      <div className="mx-auto max-w-3xl rounded-xl bg-white p-6 shadow">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-green-800">
-              Editar ponto turístico
-            </h1>
-            <p className="text-gray-600">
-              Atualize as informações do ponto cadastrado.
-            </p>
+    <main className="p-8">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-green-700 shadow-sm">
+              <MapPin size={28} />
+            </div>
+
+            <div>
+              <h1 className="text-3xl font-bold text-zinc-900">
+                Editar ponto turístico
+              </h1>
+
+              <p className="text-zinc-500">
+                Atualize as informações do ponto cadastrado.
+              </p>
+            </div>
           </div>
 
-          <Link href="/admin" className="text-sm font-semibold text-green-700">
+          <Link
+            href="/admin/pontos"
+            className="flex items-center gap-2 rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:border-green-700 hover:bg-green-50 hover:text-green-700"
+          >
+            <ArrowLeft size={16} />
             Voltar
           </Link>
         </div>
 
-        <form action={atualizarPonto} className="space-y-5">
-          <div>
-            <label className="mb-1 block font-semibold">Título</label>
-            <input
-              name="titulo"
-              defaultValue={ponto.titulo}
-              required
-              className="w-full rounded border p-3"
-            />
-          </div>
+        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
+          <form action={atualizarPonto} className="space-y-6">
+            <div>
+              <label className="mb-2 block font-semibold text-zinc-700">
+                Título
+              </label>
 
-          <div>
-            <label className="mb-1 block font-semibold">Descrição</label>
-            <textarea
-              name="descricao"
-              defaultValue={ponto.descricao}
-              required
-              className="h-24 w-full rounded border p-3"
-            />
-          </div>
+              <input
+                name="titulo"
+                defaultValue={ponto.titulo}
+                required
+                className="w-full rounded-xl border border-zinc-300 px-4 py-3 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-100"
+              />
+            </div>
 
-          <div>
-            <label className="mb-1 block font-semibold">Conteúdo</label>
-            <textarea
-              name="conteudo"
-              defaultValue={ponto.conteudo}
-              required
-              className="h-40 w-full rounded border p-3"
-            />
-          </div>
+            <div>
+              <label className="mb-2 block font-semibold text-zinc-700">
+                Descrição
+              </label>
 
-          <div>
-            <label className="mb-1 block font-semibold">URL da imagem</label>
-            <input
-              name="imagem"
-              defaultValue={ponto.imagem || ""}
-              className="w-full rounded border p-3"
-            />
-          </div>
+              <textarea
+                name="descricao"
+                defaultValue={ponto.descricao}
+                required
+                rows={4}
+                className="w-full rounded-xl border border-zinc-300 p-4 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-100"
+              />
+            </div>
 
-          <div>
-            <label className="mb-1 block font-semibold">Endereço</label>
-            <input
-              name="endereco"
-              defaultValue={ponto.endereco || ""}
-              className="w-full rounded border p-3"
-            />
-          </div>
+            <div>
+              <label className="mb-2 flex items-center gap-2 font-semibold text-zinc-700">
+                <FileText size={18} />
+                Conteúdo
+              </label>
 
-          <div>
-            <label className="mb-1 block font-semibold">Categoria</label>
-            <select
-              name="categoria"
-              defaultValue={ponto.categoria}
-              required
-              className="w-full rounded border p-3"
+              <textarea
+                name="conteudo"
+                defaultValue={ponto.conteudo}
+                required
+                rows={8}
+                className="w-full rounded-xl border border-zinc-300 p-4 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-100"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 flex items-center gap-2 font-semibold text-zinc-700">
+                <ImageIcon size={18} />
+                URL da imagem
+              </label>
+
+              <input
+                name="imagem"
+                defaultValue={ponto.imagem || ""}
+                placeholder="https://..."
+                className="w-full rounded-xl border border-zinc-300 px-4 py-3 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-100"
+              />
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              <div>
+                <label className="mb-2 block font-semibold text-zinc-700">
+                  Endereço
+                </label>
+
+                <input
+                  name="endereco"
+                  defaultValue={ponto.endereco || ""}
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-3 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-100"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block font-semibold text-zinc-700">
+                  Categoria
+                </label>
+
+                <select
+                  name="categoria"
+                  defaultValue={ponto.categoria}
+                  required
+                  className="w-full rounded-xl border border-zinc-300 px-4 py-3 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-100"
+                >
+                  <option value="NATUREZA">Natureza</option>
+                  <option value="CULTURA">Cultura</option>
+                  <option value="GASTRONOMIA">
+                    Gastronomia
+                  </option>
+                  <option value="HOSPEDAGEM">Hospedagem</option>
+                  <option value="EVENTOS">Eventos</option>
+                </select>
+              </div>
+            </div>
+
+            <label className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 font-semibold text-zinc-700">
+              <input
+                type="checkbox"
+                name="publicado"
+                defaultChecked={ponto.publicado}
+                className="h-5 w-5 accent-green-700"
+              />
+              Publicado
+            </label>
+
+            <button
+              type="submit"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-700 px-4 py-3 font-semibold text-white shadow-sm transition hover:bg-green-800 hover:shadow-md"
             >
-              <option value="natureza">Natureza</option>
-              <option value="cultura">Cultura</option>
-              <option value="gastronomia">Gastronomia</option>
-              <option value="hospedagem">Hospedagem</option>
-              <option value="eventos">Eventos</option>
-            </select>
-          </div>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="publicado"
-              defaultChecked={ponto.publicado}
-            />
-            Publicado
-          </label>
-
-          <button
-            type="submit"
-            className="w-full rounded bg-green-700 px-4 py-3 font-semibold text-white hover:bg-green-800"
-          >
-            Salvar alterações
-          </button>
-        </form>
+              <Save size={18} />
+              Salvar alterações
+            </button>
+          </form>
+        </div>
       </div>
     </main>
   );

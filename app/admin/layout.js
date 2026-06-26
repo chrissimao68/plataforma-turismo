@@ -9,12 +9,17 @@ const catamaran = Catamaran({
 
 export default function AdminLayout({ children }) {
   return (
-    <div className={catamaran.className + " min-h-screen bg-gray-100"}>
+    <div
+      className={`${catamaran.className} min-h-screen bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100`}
+    >
       <AdminSidebar />
 
-      <div className="ml-72">
+      <div className="ml-72 min-h-screen">
         <AdminTopbar />
-        {children}
+
+        <main className="min-h-[calc(100vh-73px)]">
+          {children}
+        </main>
       </div>
     </div>
   );

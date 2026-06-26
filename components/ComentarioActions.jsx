@@ -8,45 +8,74 @@ import {
   excluirComentario,
 } from "@/app/actions/comentarios";
 
-export default function ComentarioActions({ id, aprovado }) {
+export default function ComentarioActions({
+  id,
+  aprovado,
+}) {
   const router = useRouter();
 
   async function handleAprovar() {
-    const result = await aprovarComentario(id);
+    try {
+      const result = await aprovarComentario(id);
 
-    if (result?.success) {
-      toast.success(result.success);
-      router.refresh();
-    }
+      if (result?.success) {
+        toast.success(result.success);
+        router.refresh();
+      }
 
-    if (result?.error) {
-      toast.error(result.error);
+      if (result?.error) {
+        toast.error(result.error);
+      }
+    } catch {
+      toast.error(
+        "Erro ao aprovar o comentário."
+      );
     }
   }
 
   async function handleExcluir() {
-    const confirmar = confirm("Deseja excluir este comentário?");
+    const confirmar = confirm(
+      "Deseja excluir este comentário?"
+    );
+
     if (!confirmar) return;
 
-    const result = await excluirComentario(id);
+    try {
+      const result = await excluirComentario(id);
 
-    if (result?.success) {
-      toast.success(result.success);
-      router.refresh();
-    }
+      if (result?.success) {
+        toast.success(result.success);
+        router.refresh();
+      }
 
-    if (result?.error) {
-      toast.error(result.error);
+      if (result?.error) {
+        toast.error(result.error);
+      }
+    } catch {
+      toast.error(
+        "Erro ao excluir o comentário."
+      );
     }
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex items-center gap-2">
       {!aprovado && (
         <button
           onClick={handleAprovar}
-          className="rounded bg-green-700 p-2 text-white hover:bg-green-800"
           title="Aprovar comentário"
+          className="
+            flex items-center justify-center
+            rounded-lg
+            bg-green-700
+            p-2
+            text-white
+            shadow-sm
+            transition-all
+            hover:bg-green-800
+            hover:shadow-md
+            active:scale-95
+          "
         >
           <Check size={16} />
         </button>
@@ -54,8 +83,19 @@ export default function ComentarioActions({ id, aprovado }) {
 
       <button
         onClick={handleExcluir}
-        className="rounded bg-red-600 p-2 text-white hover:bg-red-700"
         title="Excluir comentário"
+        className="
+          flex items-center justify-center
+          rounded-lg
+          bg-red-600
+          p-2
+          text-white
+          shadow-sm
+          transition-all
+          hover:bg-red-700
+          hover:shadow-md
+          active:scale-95
+        "
       >
         <Trash2 size={16} />
       </button>
