@@ -78,7 +78,7 @@ export default async function GastronomiaPage() {
       </section>
 
       <section className="relative z-20 mx-auto -mt-14 max-w-7xl px-6">
-        <div className="grid gap-4 rounded-3xl border border-zinc-200 bg-white p-6 shadow-xl transition-colors dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 rounded-3xl border border-zinc-200 bg-white py-6 justify-items-center shadow-xl transition-colors dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-2 lg:grid-cols-4">
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300">
               <Utensils size={24} />
