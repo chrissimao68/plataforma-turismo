@@ -8,7 +8,6 @@ import {
   MessageCircle,
   Clock,
   Users,
-  
 } from "lucide-react";
 
 export default async function AdminPage() {
@@ -56,16 +55,15 @@ export default async function AdminPage() {
   ).length;
 
   return (
-    <main className="p-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Cabeçalho */}
-        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <main className="w-full px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="mb-6 flex flex-col gap-4 sm:mb-8 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">
+            <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-3xl lg:text-4xl">
               Dashboard Administrativo
             </h1>
 
-            <p className="mt-2 text-zinc-500 dark:text-zinc-400">
+            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 sm:text-base">
               Visão geral do portal turístico de Lavras.
             </p>
           </div>
@@ -73,17 +71,12 @@ export default async function AdminPage() {
           <Link
             href="/admin/novo"
             className="
-              inline-flex items-center gap-2
-              rounded-xl
-              bg-green-700
-              px-5 py-3
-              font-semibold
-              text-white
-              transition-all
-              hover:bg-green-800
-              hover:shadow-lg
-              dark:bg-green-600
-              dark:hover:bg-green-500
+              inline-flex w-full items-center justify-center gap-2
+              rounded-xl bg-green-700 px-5 py-3
+              font-semibold text-white transition-all
+              hover:bg-green-800 hover:shadow-lg
+              dark:bg-green-600 dark:hover:bg-green-500
+              sm:w-auto
             "
           >
             <Plus size={18} />
@@ -91,87 +84,82 @@ export default async function AdminPage() {
           </Link>
         </div>
 
-        {/* Métricas */}
-        <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <MapPin className="mb-3 text-green-600 dark:text-green-400" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+          <MetricCard
+            icon={<MapPin />}
+            label="Pontos"
+            value={pontos.length}
+            color="green"
+          />
 
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              Pontos
-            </p>
+          <MetricCard
+            icon={<CheckCircle />}
+            label="Publicados"
+            value={publicados}
+            color="green"
+          />
 
-            <h2 className="mt-1 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {pontos.length}
-            </h2>
-          </div>
+          <MetricCard
+            icon={<Image />}
+            label="Com galeria"
+            value={comGaleria}
+            color="blue"
+          />
 
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <CheckCircle className="mb-3 text-green-600 dark:text-green-400" />
+          <MetricCard
+            icon={<MessageCircle />}
+            label="Comentários"
+            value={comentarios.length}
+            color="yellow"
+          />
 
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              Publicados
-            </p>
+          <MetricCard
+            icon={<Clock />}
+            label="Pendentes"
+            value={comentariosPendentes}
+            color="orange"
+          />
 
-            <h2 className="mt-1 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {publicados}
-            </h2>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <Image className="mb-3 text-blue-600 dark:text-blue-400" />
-
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              Com galeria
-            </p>
-
-            <h2 className="mt-1 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {comGaleria}
-            </h2>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <MessageCircle className="mb-3 text-yellow-600 dark:text-yellow-400" />
-
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              Comentários
-            </p>
-
-            <h2 className="mt-1 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {comentarios.length}
-            </h2>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <Clock className="mb-3 text-orange-600 dark:text-orange-400" />
-
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              Pendentes
-            </p>
-
-            <h2 className="mt-1 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {comentariosPendentes}
-            </h2>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <Users className="mb-3 text-purple-600 dark:text-purple-400" />
-
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              Admins pendentes
-            </p>
-
-            <h2 className="mt-1 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {adminsPendentes}
-            </h2>
-          </div>
+          <MetricCard
+            icon={<Users />}
+            label="Admins pendentes"
+            value={adminsPendentes}
+            color="purple"
+          />
         </div>
-
-        
-          
-            
-          
-        
       </div>
     </main>
+  );
+}
+
+function MetricCard({ icon, label, value, color }) {
+  const colors = {
+    green: "text-green-600 dark:text-green-400",
+    blue: "text-blue-600 dark:text-blue-400",
+    yellow: "text-yellow-600 dark:text-yellow-400",
+    orange: "text-orange-600 dark:text-orange-400",
+    purple: "text-purple-600 dark:text-purple-400",
+  };
+
+  return (
+    <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {label}
+          </p>
+
+          <h2 className="mt-2 text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+            {value}
+          </h2>
+        </div>
+
+        <div
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-zinc-100 dark:bg-zinc-950 ${colors[color]}`}
+        >
+          {icon}
+        </div>
+      </div>
+    </div>
   );
 }

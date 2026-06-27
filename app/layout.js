@@ -10,7 +10,16 @@ const catamaran = Catamaran({
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body className={catamaran.className}>
+      <body
+        className={`
+          ${catamaran.className}
+          min-h-screen
+          bg-white
+          text-zinc-900
+          antialiased
+          overflow-x-hidden
+        `}
+      >
         {children}
 
         <Toaster

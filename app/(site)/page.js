@@ -149,64 +149,65 @@ export default async function HomePage() {
   </div>
 </section>
 
-      {/* CATEGORIAS */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-        <div className="mb-8 sm:mb-10">
-          <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-4xl">
-            Explore por categoria
-          </h2>
+    {/* CATEGORIAS */}
+<section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+  <div className="mb-8 text-center sm:mb-10">
+    <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-4xl">
+      Explore por categoria
+    </h2>
 
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 sm:text-base">
-            Escolha o tipo de experiência que combina com sua viagem.
-          </p>
-        </div>
+    <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 sm:text-base">
+      Escolha o tipo de experiência que combina com sua viagem.
+    </p>
+  </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {categorias.map((item) => {
-            const Icon = item.Icon
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    {categorias.map((item) => {
+      const Icon = item.Icon
 
-            return (
-              <Link key={item.titulo} href={item.href} className="group">
-                <div className="relative h-[260px] overflow-hidden rounded-2xl shadow-xl sm:h-[300px] lg:h-[330px]">
-                  <img
-                    src={item.imagem}
-                    alt={item.titulo}
-                    className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-                  />
+      return (
+        <Link key={item.titulo} href={item.href} className="group block">
+          <div className="relative h-52 overflow-hidden rounded-2xl border border-white/10 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:h-64 lg:h-[330px]">
+            <img
+              src={item.imagem}
+              alt={item.titulo}
+              className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
+            />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/10" />
+            <div className="absolute inset-0 bg-black/10 transition group-hover:bg-black/0" />
 
-                  <div className="absolute inset-0 flex flex-col justify-end p-5 text-white">
-                    <div
-                      className={`mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-white/30 backdrop-blur-md sm:h-14 sm:w-14 ${item.corIcone}`}
-                    >
-                      <Icon size={26} />
-                    </div>
+            <div className="absolute inset-0 flex flex-col justify-end p-4 text-white sm:p-5">
+              <div
+                className={`mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 shadow-lg backdrop-blur-md sm:h-13 sm:w-13 lg:h-14 lg:w-14 ${item.corIcone}`}
+              >
+                <Icon className="h-6 w-6 sm:h-7 sm:w-7" />
+              </div>
 
-                    <h3 className="mb-2 text-2xl font-bold sm:text-3xl">
-                      {item.titulo}
-                    </h3>
+              <h3 className="mb-2 text-2xl font-bold leading-tight sm:text-3xl">
+                {item.titulo}
+              </h3>
 
-                    <p className="text-sm leading-relaxed text-white/90 sm:text-base">
-                      {item.descricao}
-                    </p>
+              <p className="line-clamp-2 text-sm leading-6 text-white/90 sm:text-base">
+                {item.descricao}
+              </p>
 
-                    <span
-                      className={`mt-3 text-base font-semibold sm:text-lg ${item.corLink}`}
-                    >
-                      Explorar →
-                    </span>
-                  </div>
+              <span
+                className={`mt-3 inline-flex text-sm font-bold sm:text-base lg:text-lg ${item.corLink}`}
+              >
+                Explorar →
+              </span>
+            </div>
 
-                  <div
-                    className={`absolute bottom-0 left-0 h-2 w-full ${item.cor}`}
-                  />
-                </div>
-              </Link>
-            )
-          })}
-        </div>
-      </section>
+            <div
+              className={`absolute bottom-0 left-0 h-1.5 w-full sm:h-2 ${item.cor}`}
+            />
+          </div>
+        </Link>
+      )
+    })}
+  </div>
+</section>
 
       {/* PONTOS RECENTES */}
       <section className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20">

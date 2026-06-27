@@ -3,12 +3,12 @@ import { Star } from "lucide-react";
 export default function ComentariosLista({ comentarios }) {
   if (!comentarios || comentarios.length === 0) {
     return (
-      <section className="mt-10 rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition-colors">
-        <h2 className="text-2xl font-bold text-green-800">
+      <section className="mt-8 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition-colors sm:mt-10 sm:p-6">
+        <h2 className="text-xl font-bold text-green-800 sm:text-2xl">
           Avaliações
         </h2>
 
-        <p className="mt-2 text-zinc-500">
+        <p className="mt-2 text-sm text-zinc-500 sm:text-base">
           Ainda não há avaliações. Seja o primeiro a comentar.
         </p>
       </section>
@@ -16,8 +16,8 @@ export default function ComentariosLista({ comentarios }) {
   }
 
   return (
-    <section className="mt-10">
-      <h2 className="text-2xl font-bold text-green-800">
+    <section className="mt-8 sm:mt-10">
+      <h2 className="text-xl font-bold text-green-800 sm:text-2xl">
         Avaliações dos visitantes
       </h2>
 
@@ -29,15 +29,18 @@ export default function ComentariosLista({ comentarios }) {
               rounded-2xl
               border border-zinc-200
               bg-white
-              p-5
+              p-4
               shadow-sm
               transition-all
               hover:shadow-md
+
+              sm:p-5
             "
           >
-            <div className="flex items-center justify-between gap-4">
+            {/* Cabeçalho */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="font-bold text-zinc-900">
+                <h3 className="text-base font-bold text-zinc-900 sm:text-lg">
                   {item.nome}
                 </h3>
 
@@ -46,7 +49,7 @@ export default function ComentariosLista({ comentarios }) {
                 </p>
               </div>
 
-              <div className="flex gap-0.5">
+              <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((estrela) => (
                   <Star
                     key={estrela}
@@ -61,7 +64,8 @@ export default function ComentariosLista({ comentarios }) {
               </div>
             </div>
 
-            <p className="mt-4 leading-7 text-zinc-700">
+            {/* Comentário */}
+            <p className="mt-4 text-sm leading-7 text-zinc-700 sm:text-base">
               {item.comentario}
             </p>
           </article>
