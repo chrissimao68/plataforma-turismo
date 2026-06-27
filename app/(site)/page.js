@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import CardPonto from "@/components/CardPonto";
-import ModeloModal from "@/components/conhecamodal";
+import Link from "next/link"
+import { prisma } from "@/lib/prisma"
+import CardPonto from "@/components/CardPonto"
+import ModeloModal from "@/components/conhecamodal"
 import {
   Trees,
   Landmark,
@@ -9,7 +9,7 @@ import {
   CalendarDays,
   Hotel,
   ArrowRight,
-} from "lucide-react";
+} from "lucide-react"
 
 export default async function HomePage() {
   const pontos = await prisma.pontoTuristico.findMany({
@@ -27,7 +27,7 @@ export default async function HomePage() {
         },
       },
     },
-  });
+  })
 
   const categorias = [
     {
@@ -90,82 +90,84 @@ export default async function HomePage() {
         "bg-gradient-to-r from-sky-300 via-sky-400 to-sky-500 bg-clip-text text-transparent",
       Icon: Hotel,
     },
-  ];
+  ]
 
   return (
-    <main className="bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
+    <main className="overflow-hidden bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       {/* HERO */}
-      <section
-        className="
-          relative flex min-h-[720px] items-center overflow-hidden
-          bg-[url('/fotocapaescura.png')]
-          bg-cover bg-center
-          text-white
-          dark:bg-[url('/fotodecapadark.png')]
-        "
-      >
-       
-       
+     {/* HERO */}
+<section
+  className="
+    relative flex min-h-[560px] items-center overflow-hidden
+    bg-[url('/fotocapaescura.png')]
+    bg-cover bg-center
+    text-white
+    dark:bg-[url('/fotodecapadark.png')]
+    sm:min-h-[640px]
+    lg:min-h-[720px]
+  "
+>
+  <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/45 to-black/80" />
+  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-6 py-20 lg:grid-cols-2 lg:items-center">
-          <div className="flex flex-col gap-8">
-            <div>
-              <p className="mb-4 text-sm font-bold uppercase tracking-[0.35em] text-green-200">
-                Turismo Em Lavras - Minas Gerais
-              </p>
+  <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-20 lg:grid-cols-2 lg:items-center lg:px-8">
+    <div className="flex max-w-2xl flex-col gap-6 sm:gap-8">
+      <div>
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-green-200 sm:mb-4 sm:text-sm sm:tracking-[0.35em]">
+          Turismo em Lavras - Minas Gerais
+        </p>
 
-              <h1 className="text-5xl font-extrabold leading-tight md:text-7xl">
-                Conheça Lavras
-              </h1>
+        <h1 className="text-4xl font-extrabold leading-[1.05] drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
+          Conheça Lavras
+        </h1>
 
-              <h3 className="mt-4 text-2xl font-bold text-green-100 md:text-3xl">
-                Entre serras, sabores e letras.
-              </h3>
+        <h3 className="mt-4 max-w-md text-xl font-bold leading-snug text-green-100 sm:text-2xl md:text-3xl">
+          Entre serras, sabores e letras.
+        </h3>
 
-              <p className="mt-6 max-w-xl text-lg leading-8 text-green-50">
-                Explore pontos turísticos, natureza, cultura, gastronomia,
-                eventos e hospedagens em uma plataforma feita para valorizar
-                Lavras.
-              </p>
-            </div>
+        <p className="mt-5 max-w-xl text-base leading-7 text-green-50 sm:text-lg sm:leading-8">
+          Explore pontos turísticos, natureza, cultura, gastronomia, eventos e
+          hospedagens em uma plataforma feita para valorizar Lavras.
+        </p>
+      </div>
 
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/natureza"
-                className="rounded-xl bg-white px-6 py-3 font-bold text-green-800 shadow-lg transition hover:bg-green-100 dark:bg-zinc-100 dark:text-green-900 dark:hover:bg-white"
-              >
-                Planeje sua viagem
-              </Link>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Link
+          href="/natureza"
+          className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-bold text-green-800 shadow-lg transition hover:bg-green-100 sm:px-6 sm:text-base dark:bg-zinc-100 dark:text-green-900 dark:hover:bg-white"
+        >
+          Planeje sua viagem
+        </Link>
 
-              <ModeloModal />
-            </div>
-          </div>
+        <ModeloModal />
+      </div>
+    </div>
 
-          <div className="hidden lg:flex lg:justify-end">
-            <div className="h-[560px] w-full max-w-lg bg-[url('/logotransparentefundo2.png')] bg-contain bg-center bg-no-repeat" />
-          </div>
-        </div>
-      </section>
+    <div className="hidden lg:flex lg:justify-end">
+      <div className="h-[420px] w-full max-w-md bg-[url('/logotransparentefundo2.png')] bg-contain bg-center bg-no-repeat xl:h-[560px] xl:max-w-lg" />
+    </div>
+  </div>
+</section>
 
       {/* CATEGORIAS */}
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="mb-10">
-          <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">
+      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div className="mb-8 sm:mb-10">
+          <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-4xl">
             Explore por categoria
           </h2>
 
-          <p className="mt-3 text-zinc-600 dark:text-zinc-400">
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 sm:text-base">
             Escolha o tipo de experiência que combina com sua viagem.
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {categorias.map((item) => {
-            const Icon = item.Icon;
+            const Icon = item.Icon
 
             return (
               <Link key={item.titulo} href={item.href} className="group">
-                <div className="relative h-[330px] overflow-hidden rounded-2xl shadow-xl">
+                <div className="relative h-[260px] overflow-hidden rounded-2xl shadow-xl sm:h-[300px] lg:h-[330px]">
                   <img
                     src={item.imagem}
                     alt={item.titulo}
@@ -176,21 +178,21 @@ export default async function HomePage() {
 
                   <div className="absolute inset-0 flex flex-col justify-end p-5 text-white">
                     <div
-                      className={`mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-white/30 backdrop-blur-md ${item.corIcone}`}
+                      className={`mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-white/30 backdrop-blur-md sm:h-14 sm:w-14 ${item.corIcone}`}
                     >
-                      <Icon size={30} />
+                      <Icon size={26} />
                     </div>
 
-                    <h3 className="mb-3 text-3xl font-bold">
+                    <h3 className="mb-2 text-2xl font-bold sm:text-3xl">
                       {item.titulo}
                     </h3>
 
-                    <p className="leading-relaxed text-white/90">
+                    <p className="text-sm leading-relaxed text-white/90 sm:text-base">
                       {item.descricao}
                     </p>
 
                     <span
-                      className={`mt-3 text-lg font-semibold ${item.corLink}`}
+                      className={`mt-3 text-base font-semibold sm:text-lg ${item.corLink}`}
                     >
                       Explorar →
                     </span>
@@ -201,45 +203,45 @@ export default async function HomePage() {
                   />
                 </div>
               </Link>
-            );
+            )
           })}
         </div>
       </section>
 
       {/* PONTOS RECENTES */}
-      <section className="mx-auto max-w-7xl px-6 pb-20">
-        <div className="mb-8 flex items-center justify-between gap-4">
+      <section className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-3xl font-bold text-green-900 dark:text-green-400">
+            <h2 className="text-2xl font-bold text-green-900 dark:text-green-400 sm:text-3xl">
               Pontos turísticos recentes
             </h2>
 
-            <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-400 sm:text-base">
               Lugares cadastrados recentemente no portal.
             </p>
           </div>
 
           <Link
             href="/natureza"
-            className="hidden items-center gap-2 font-semibold text-green-700 transition hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 md:flex"
+            className="inline-flex items-center gap-2 font-semibold text-green-700 transition hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
           >
             Ver mais
             <ArrowRight size={18} />
           </Link>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {pontos.map((ponto) => (
             <CardPonto key={ponto.id} ponto={ponto} />
           ))}
         </div>
 
         {pontos.length === 0 && (
-          <div className="rounded-2xl border border-zinc-200 bg-white p-10 text-center text-zinc-500 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+          <div className="rounded-2xl border border-zinc-200 bg-white p-8 text-center text-sm text-zinc-500 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 sm:p-10 sm:text-base">
             Nenhum ponto turístico publicado ainda.
           </div>
         )}
       </section>
     </main>
-  );
+  )
 }

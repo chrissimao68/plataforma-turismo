@@ -1,140 +1,88 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Star, Send } from "lucide-react";
-import { toast } from "sonner";
-import { criarComentario } from "@/app/actions/comentarios";
+import { useState } from "react"
+import { Star, Send } from "lucide-react"
+import { toast } from "sonner"
+import { criarComentario } from "@/app/actions/comentarios"
 
 export default function ComentarioForm({ pontoId }) {
-  const [nota, setNota] = useState(5);
-  const [loading, setLoading] = useState(false);
+  const [nota, setNota] = useState(5)
+  const [loading, setLoading] = useState(false)
 
   async function handleSubmit(formData) {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      formData.set("pontoId", String(pontoId));
-      formData.set("nota", String(nota));
+      formData.set("pontoId", String(pontoId))
+      formData.set("nota", String(nota))
 
-      const result = await criarComentario(formData);
+      const result = await criarComentario(formData)
 
       if (result?.error) {
-        toast.error(result.error);
-        return;
+        toast.error(result.error)
+        return
       }
 
       if (result?.success) {
-        toast.success(result.success);
-
-        document
-          .getElementById("comentario-form")
-          ?.reset();
-
-        setNota(5);
+        toast.success(result.success)
+        document.getElementById("comentario-form")?.reset()
+        setNota(5)
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
   return (
-    <section className="mt-14 rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900">
+    <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900 sm:rounded-3xl sm:p-8">
       <h2 className="text-2xl font-bold text-green-800 dark:text-green-400">
-        Deixe Seu Comentário
+        Deixe seu comentário
       </h2>
 
-      <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+      <p className="mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-400 sm:text-base">
         Conte como foi sua experiência neste lugar.
       </p>
 
       <form
         id="comentario-form"
         action={handleSubmit}
-        className="mt-6 space-y-6"
+        className="mt-6 space-y-5 sm:space-y-6"
       >
-        <div className="grid gap-5 lg:grid-cols-[1fr_280px_220px]">
-          {/* Nome */}
-          <div>
-            <label className="mb-2 block font-semibold text-zinc-700 dark:text-zinc-300">
-              Nome
-            </label>
-
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_280px_220px]">
+          <FormField label="Nome">
             <input
               name="nome"
               required
               placeholder="Seu nome"
-              className="
-                w-full rounded-xl
-                border border-zinc-300
-                bg-white
-                px-4 py-3
-                text-zinc-900
-                outline-none
-                transition
-                placeholder:text-zinc-400
-                focus:border-green-700
-                focus:ring-2
-                focus:ring-green-200
-
-                dark:border-zinc-700
-                dark:bg-zinc-950
-                dark:text-zinc-100
-                dark:placeholder:text-zinc-500
-                dark:focus:border-green-500
-                dark:focus:ring-green-950
-              "
+              className={inputClass}
             />
-          </div>
+          </FormField>
 
-          {/* Cidade */}
-          <div>
-            <label className="mb-2 block font-semibold text-zinc-700 dark:text-zinc-300">
-              Cidade
-            </label>
-
+          <FormField label="Cidade">
             <input
               name="cidade"
               required
               placeholder="Sua cidade"
-              className="
-                w-full rounded-xl
-                border border-zinc-300
-                bg-white
-                px-4 py-3
-                text-zinc-900
-                outline-none
-                transition
-                placeholder:text-zinc-400
-                focus:border-green-700
-                focus:ring-2
-                focus:ring-green-200
-
-                dark:border-zinc-700
-                dark:bg-zinc-950
-                dark:text-zinc-100
-                dark:placeholder:text-zinc-500
-                dark:focus:border-green-500
-                dark:focus:ring-green-950
-              "
+              className={inputClass}
             />
-          </div>
+          </FormField>
 
-          {/* Nota */}
           <div>
             <label className="mb-2 block font-semibold text-zinc-700 dark:text-zinc-300">
               Nota
             </label>
 
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2 rounded-xl border border-zinc-300 bg-white px-4 py-3 dark:border-zinc-700 dark:bg-zinc-950">
               {[1, 2, 3, 4, 5].map((estrela) => (
                 <button
                   key={estrela}
                   type="button"
                   onClick={() => setNota(estrela)}
                   className="transition hover:scale-110"
+                  aria-label={`Dar nota ${estrela}`}
                 >
                   <Star
-                    size={28}
+                    size={24}
                     className={
                       estrela <= nota
                         ? "fill-yellow-400 text-yellow-400"
@@ -147,68 +95,54 @@ export default function ComentarioForm({ pontoId }) {
           </div>
         </div>
 
-        {/* Comentário */}
-        <div>
-          <label className="mb-2 block font-semibold text-zinc-700 dark:text-zinc-300">
-            Comentário
-          </label>
-
+        <FormField label="Comentário">
           <textarea
             name="comentario"
             required
             rows={5}
             placeholder="Escreva o que achou desse lugar..."
-            className="
-              w-full rounded-xl
-              border border-zinc-300
-              bg-white
-              p-4
-              text-zinc-900
-              outline-none
-              transition
-              placeholder:text-zinc-400
-              focus:border-green-700
-              focus:ring-2
-              focus:ring-green-200
-
-              dark:border-zinc-700
-              dark:bg-zinc-950
-              dark:text-zinc-100
-              dark:placeholder:text-zinc-500
-              dark:focus:border-green-500
-              dark:focus:ring-green-950
-            "
+            className={`${inputClass} min-h-32 resize-none p-4`}
           />
-        </div>
+        </FormField>
 
-        {/* Botão */}
         <button
           type="submit"
           disabled={loading}
           className="
-            flex items-center justify-center gap-2
-            rounded-xl
-            bg-green-700
-            px-6 py-3
-            font-semibold
-            text-white
-            shadow-sm
-            transition-all
-            hover:bg-green-800
-            hover:shadow-md
-            active:scale-[0.98]
-            disabled:cursor-not-allowed
-            disabled:opacity-60
-
-            dark:bg-green-600
-            dark:hover:bg-green-500
+            flex w-full items-center justify-center gap-2 rounded-xl
+            bg-green-700 px-6 py-3 font-semibold text-white
+            shadow-sm transition-all hover:bg-green-800 hover:shadow-md
+            active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60
+            dark:bg-green-600 dark:hover:bg-green-500
+            sm:w-auto
           "
         >
           <Send size={18} />
-
           {loading ? "Enviando..." : "Enviar avaliação"}
         </button>
       </form>
     </section>
-  );
+  )
 }
+
+function FormField({ label, children }) {
+  return (
+    <div>
+      <label className="mb-2 block font-semibold text-zinc-700 dark:text-zinc-300">
+        {label}
+      </label>
+
+      {children}
+    </div>
+  )
+}
+
+const inputClass = `
+  w-full rounded-xl border border-zinc-300 bg-white
+  px-4 py-3 text-zinc-900 outline-none transition
+  placeholder:text-zinc-400
+  focus:border-green-700 focus:ring-2 focus:ring-green-200
+  dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100
+  dark:placeholder:text-zinc-500
+  dark:focus:border-green-500 dark:focus:ring-green-950
+`

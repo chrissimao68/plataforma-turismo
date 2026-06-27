@@ -1,14 +1,10 @@
-import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
-import ComentarioForm from "@/components/ComentarioForm";
-import {
-  MapPin,
-  ImageIcon,
-  MessageCircle,
-} from "lucide-react";
+import { prisma } from "@/lib/prisma"
+import { notFound } from "next/navigation"
+import ComentarioForm from "@/components/ComentarioForm"
+import { MapPin, ImageIcon, MessageCircle } from "lucide-react"
 
 export default async function PontoPage({ params }) {
-  const { id } = await params;
+  const { id } = await params
 
   const ponto = await prisma.pontoTuristico.findUnique({
     where: {
@@ -25,69 +21,71 @@ export default async function PontoPage({ params }) {
         },
       },
     },
-  });
+  })
 
   if (!ponto || !ponto.publicado) {
-    notFound();
+    notFound()
   }
 
   return (
-    <main className="min-h-screen bg-zinc-50 px-4 py-10 text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
-      <div className="mx-auto max-w-6xl">
-        {/* CAPA */}
-        <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900">
-          {ponto.imagem && (
-            <div className="relative">
+    <main className="min-h-screen bg-zinc-50 px-4 py-8 text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100 sm:px-6 sm:py-10 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900 sm:rounded-3xl">
+          {ponto.imagem ? (
+            <div className="relative min-h-[360px] sm:min-h-[460px] lg:min-h-[520px]">
               <img
                 src={ponto.imagem}
                 alt={ponto.titulo}
-                className="h-[500px] w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
-              <div className="absolute bottom-0 left-0 p-8 text-white">
-                <span className="rounded-full bg-green-600 px-4 py-2 text-sm font-semibold dark:bg-green-500">
+              <div className="absolute bottom-0 left-0 w-full p-5 text-white sm:p-8">
+                <span className="inline-flex rounded-full bg-green-600 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide dark:bg-green-500 sm:px-4 sm:py-2 sm:text-sm">
                   {ponto.categoria}
                 </span>
 
-                <h1 className="mt-4 text-4xl font-bold md:text-5xl">
+                <h1 className="mt-4 max-w-4xl text-3xl font-extrabold leading-tight drop-shadow-lg sm:text-4xl lg:text-5xl">
                   {ponto.titulo}
                 </h1>
 
                 {ponto.endereco && (
-                  <p className="mt-3 flex items-center gap-2 text-green-100">
-                    <MapPin size={18} />
-                    {ponto.endereco}
+                  <p className="mt-3 flex max-w-3xl items-start gap-2 text-sm leading-6 text-green-100 sm:text-base">
+                    <MapPin size={18} className="mt-0.5 shrink-0" />
+                    <span>{ponto.endereco}</span>
                   </p>
                 )}
               </div>
             </div>
+          ) : (
+            <div className="flex min-h-[280px] flex-col items-center justify-center gap-3 bg-zinc-100 text-zinc-500 dark:bg-zinc-950 dark:text-zinc-400 sm:min-h-[360px]">
+              <ImageIcon size={34} />
+              Sem imagem principal
+            </div>
           )}
 
-          <div className="p-8">
-            <p className="text-lg leading-8 text-zinc-600 dark:text-zinc-300">
+          <div className="p-5 sm:p-8">
+            <p className="text-base leading-8 text-zinc-600 dark:text-zinc-300 sm:text-lg">
               {ponto.descricao}
             </p>
 
-            <div className="mt-8 whitespace-pre-line leading-8 text-zinc-700 dark:text-zinc-300">
-              {ponto.conteudo}
-            </div>
+            {ponto.conteudo && (
+              <div className="mt-6 whitespace-pre-line text-sm leading-8 text-zinc-700 dark:text-zinc-300 sm:mt-8 sm:text-base">
+                {ponto.conteudo}
+              </div>
+            )}
           </div>
         </section>
 
-        {/* GALERIA */}
         {ponto.fotos.length > 0 && (
-          <section className="mt-12">
-            <div className="mb-6 flex items-center gap-3">
-              <ImageIcon className="text-green-700 dark:text-green-400" />
+          <section className="mt-10 sm:mt-12">
+            <SectionHeader
+              icon={<ImageIcon />}
+              title="Galeria"
+            />
 
-              <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
-                Galeria
-              </h2>
-            </div>
-
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
               {ponto.fotos.map((foto) => (
                 <div
                   key={foto.id}
@@ -96,12 +94,12 @@ export default async function PontoPage({ params }) {
                   <img
                     src={foto.url}
                     alt={foto.legenda || ponto.titulo}
-                    className="h-72 w-full object-cover transition duration-500 group-hover:scale-105"
+                    className="h-52 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-64 lg:h-72"
                   />
 
                   {foto.legenda && (
                     <div className="bg-white p-4 dark:bg-zinc-900">
-                      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                      <p className="text-sm leading-6 text-zinc-500 dark:text-zinc-400">
                         {foto.legenda}
                       </p>
                     </div>
@@ -112,32 +110,28 @@ export default async function PontoPage({ params }) {
           </section>
         )}
 
-        {/* COMENTÁRIOS */}
-        <section className="mt-14">
-          <div className="mb-6 flex items-center gap-3">
-            <MessageCircle className="text-green-700 dark:text-green-400" />
-
-            <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
-              Avaliações dos visitantes
-            </h2>
-          </div>
+        <section className="mt-12 sm:mt-14">
+          <SectionHeader
+            icon={<MessageCircle />}
+            title="Avaliações dos visitantes"
+          />
 
           {ponto.comentarios.length === 0 ? (
-            <div className="rounded-2xl border border-zinc-200 bg-white p-8 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-              <p className="text-zinc-500 dark:text-zinc-400">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:p-8">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 sm:text-base">
                 Nenhum comentário aprovado ainda.
               </p>
             </div>
           ) : (
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               {ponto.comentarios.map((comentario) => (
                 <div
                   key={comentario.id}
-                  className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900"
+                  className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900 sm:p-6"
                 >
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <h3 className="font-bold text-zinc-900 dark:text-white">
+                      <h3 className="font-bold text-zinc-900 dark:text-zinc-100">
                         {comentario.nome}
                       </h3>
 
@@ -146,13 +140,13 @@ export default async function PontoPage({ params }) {
                       </p>
                     </div>
 
-                    <span className="whitespace-nowrap text-lg text-yellow-500">
+                    <span className="whitespace-nowrap text-base text-yellow-500 sm:text-lg">
                       {"★".repeat(comentario.nota)}
                       {"☆".repeat(5 - comentario.nota)}
                     </span>
                   </div>
 
-                  <p className="mt-4 leading-7 text-zinc-700 dark:text-zinc-300">
+                  <p className="mt-4 text-sm leading-7 text-zinc-700 dark:text-zinc-300 sm:text-base">
                     {comentario.comentario}
                   </p>
                 </div>
@@ -161,11 +155,22 @@ export default async function PontoPage({ params }) {
           )}
         </section>
 
-        {/* FORMULÁRIO */}
-        <section className="mt-14">
+        <section className="mt-12 sm:mt-14">
           <ComentarioForm pontoId={ponto.id} />
         </section>
       </div>
     </main>
-  );
+  )
+}
+
+function SectionHeader({ icon, title }) {
+  return (
+    <div className="mb-5 flex items-center gap-3 sm:mb-6">
+      <div className="text-green-700 dark:text-green-400">{icon}</div>
+
+      <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+        {title}
+      </h2>
+    </div>
+  )
 }
