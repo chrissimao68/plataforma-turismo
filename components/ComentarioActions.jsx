@@ -29,26 +29,26 @@ export default function ComentarioActions({ id, aprovado }) {
   }
 
   async function handleExcluir() {
-    const confirmar = confirm("Deseja excluir este comentário?")
+  const confirmar = confirm("Deseja excluir este comentário?");
+  if (!confirmar) return;
 
-    if (!confirmar) return
+  try {
+    const result = await excluirComentario(id);
 
-    try {
-      const result = await excluirComentario(id)
-
-      if (result?.success) {
-        toast.success(result.success)
-        router.refresh()
-      }
-
-      if (result?.error) {
-        toast.error(result.error)
-      }
-    } catch {
-      toast.error("Erro ao excluir o comentário.")
+    if (result?.error) {
+      toast.error(result.error);
+      return;
     }
-  }
 
+    if (result?.success) {
+      toast.success(result.success);
+      router.refresh();
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Erro ao excluir o comentário.");
+  }
+}
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
       {!aprovado && (

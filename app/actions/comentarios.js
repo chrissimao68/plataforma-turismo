@@ -129,7 +129,7 @@ export async function excluirComentario(id) {
     };
   }
 
-  const comentario = await prisma.comentario.delete({
+  const comentario = await prisma.comentario.findUnique({
     where: {
       id: comentarioId,
     },
@@ -139,6 +139,18 @@ export async function excluirComentario(id) {
           categoria: true,
         },
       },
+    },
+  });
+
+  if (!comentario) {
+    return {
+      error: "Comentário não encontrado.",
+    };
+  }
+
+  await prisma.comentario.delete({
+    where: {
+      id: comentarioId,
     },
   });
 
