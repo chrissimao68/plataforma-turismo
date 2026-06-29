@@ -73,13 +73,12 @@ export default async function EditarPontoPage({ params }) {
               />
             </FormField>
 
-            <FormField label="Descrição">
-              <textarea
+            <FormField label="Descrição curta">
+              <input
                 name="descricao"
                 defaultValue={ponto.descricao}
                 required
-                rows={4}
-                className={`${inputClass} min-h-28 resize-none p-4`}
+                className={inputClass}
               />
             </FormField>
 
@@ -87,7 +86,7 @@ export default async function EditarPontoPage({ params }) {
               label={
                 <span className="flex items-center gap-2">
                   <FileText size={18} />
-                  Conteúdo
+                  Conteúdo completo
                 </span>
               }
             >
@@ -104,15 +103,21 @@ export default async function EditarPontoPage({ params }) {
               label={
                 <span className="flex items-center gap-2">
                   <ImageIcon size={18} />
-                  URL da imagem
+                  Imagem principal
                 </span>
               }
             >
+              {ponto.imagem && (
+                <p className="mb-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  Já existe uma imagem cadastrada. Envie outra apenas se quiser substituir.
+                </p>
+              )}
+
               <input
+                type="file"
                 name="imagem"
-                defaultValue={ponto.imagem || ""}
-                placeholder="https://..."
-                className={inputClass}
+                accept="image/*"
+                className={fileInputClass}
               />
             </FormField>
 
@@ -132,11 +137,11 @@ export default async function EditarPontoPage({ params }) {
                   required
                   className={inputClass}
                 >
-                  <option value="NATUREZA">Natureza</option>
-                  <option value="CULTURA">Cultura</option>
-                  <option value="GASTRONOMIA">Gastronomia</option>
-                  <option value="HOSPEDAGEM">Hospedagem</option>
-                  <option value="EVENTOS">Eventos</option>
+                  <option value="CULTURA">CULTURA</option>
+                  <option value="NATUREZA">NATUREZA</option>
+                  <option value="HOSPEDAGEM">HOSPEDAGEM</option>
+                  <option value="GASTRONOMIA">GASTRONOMIA</option>
+                  <option value="EVENTOS">EVENTOS</option>
                 </select>
               </FormField>
             </div>
@@ -184,5 +189,18 @@ const inputClass = `
   focus:border-green-700 focus:ring-2 focus:ring-green-100
   dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100
   dark:placeholder:text-zinc-500
+  dark:focus:border-green-500 dark:focus:ring-green-950
+`
+
+const fileInputClass = `
+  w-full cursor-pointer rounded-xl border border-zinc-300 bg-white
+  px-4 py-3 text-sm text-zinc-700 outline-none transition
+  file:mr-4 file:rounded-lg file:border-0
+  file:bg-green-700 file:px-4 file:py-2
+  file:text-sm file:font-semibold file:text-white
+  hover:file:bg-green-800
+  focus:border-green-700 focus:ring-2 focus:ring-green-100
+  dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300
+  dark:file:bg-green-600 dark:hover:file:bg-green-500
   dark:focus:border-green-500 dark:focus:ring-green-950
 `

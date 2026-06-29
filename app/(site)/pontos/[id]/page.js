@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import ComentarioForm from "@/components/ComentarioForm"
@@ -33,10 +34,13 @@ export default async function PontoPage({ params }) {
         <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900 sm:rounded-3xl">
           {ponto.imagem ? (
             <div className="relative min-h-[360px] sm:min-h-[460px] lg:min-h-[520px]">
-              <img
+              <Image
                 src={ponto.imagem}
                 alt={ponto.titulo}
-                className="absolute inset-0 h-full w-full object-cover"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 1152px"
+                className="object-cover"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
@@ -65,7 +69,7 @@ export default async function PontoPage({ params }) {
             </div>
           )}
 
-          <div className="p-5 sm:p-8">
+          <div className="p-5 sm:p-8 text-justify">
             <p className="text-base leading-8 text-zinc-600 dark:text-zinc-300 sm:text-lg">
               {ponto.descricao}
             </p>
@@ -80,10 +84,7 @@ export default async function PontoPage({ params }) {
 
         {ponto.fotos.length > 0 && (
           <section className="mt-10 sm:mt-12">
-            <SectionHeader
-              icon={<ImageIcon />}
-              title="Galeria"
-            />
+            <SectionHeader icon={<ImageIcon />} title="Galeria" />
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
               {ponto.fotos.map((foto) => (
@@ -91,11 +92,15 @@ export default async function PontoPage({ params }) {
                   key={foto.id}
                   className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-colors dark:border-zinc-800 dark:bg-zinc-900"
                 >
-                  <img
-                    src={foto.url}
-                    alt={foto.legenda || ponto.titulo}
-                    className="h-52 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-64 lg:h-72"
-                  />
+                  <div className="relative h-52 w-full overflow-hidden sm:h-64 lg:h-72">
+                    <Image
+                      src={foto.url}
+                      alt={foto.legenda || ponto.titulo}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
 
                   {foto.legenda && (
                     <div className="bg-white p-4 dark:bg-zinc-900">
