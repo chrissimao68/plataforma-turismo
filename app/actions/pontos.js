@@ -6,13 +6,8 @@ import { redirect } from "next/navigation";
 import { put } from "@vercel/blob";
 
 async function uploadImagem(file, pasta = "pontos") {
-  if (!file || file.size === 0) {
-    return null;
-  }
-
-  if (!(file instanceof File)) {
-    return null;
-  }
+  if (!file || file.size === 0) return null;
+  if (!(file instanceof File)) return null;
 
   if (!file.type?.startsWith("image/")) {
     throw new Error("O arquivo enviado precisa ser uma imagem.");
@@ -44,9 +39,7 @@ async function uploadImagem(file, pasta = "pontos") {
 
 function revalidarCategoria(categoria) {
   if (!categoria) return;
-
   const slug = String(categoria).toLowerCase();
-
   revalidatePath(`/${slug}`);
 }
 
@@ -55,25 +48,17 @@ function revalidarPonto(id, categoria) {
   revalidatePath("/admin");
   revalidatePath("/admin/pontos");
 
-  if (id) {
-    revalidatePath(`/pontos/${id}`);
-  }
-
-  if (categoria) {
-    revalidarCategoria(categoria);
-  }
+  if (id) revalidatePath(`/pontos/${id}`);
+  if (categoria) revalidarCategoria(categoria);
 }
 
 export async function criarPontoTuristico(formData) {
-  let pontoCriado = null;
-
   try {
     const titulo = String(formData.get("titulo") || "").trim();
     const descricao = String(formData.get("descricao") || "").trim();
     const conteudo = String(formData.get("conteudo") || "").trim();
     const endereco = String(formData.get("endereco") || "").trim();
     const categoria = String(formData.get("categoria") || "").trim();
-
     const imagem = String(formData.get("imagemUrl") || "").trim();
 
     const fotosUrls = formData
@@ -85,7 +70,7 @@ export async function criarPontoTuristico(formData) {
       throw new Error("Preencha os campos obrigatórios.");
     }
 
-    pontoCriado = await prisma.pontoTuristico.create({
+    const pontoCriado = await prisma.pontoTuristico.create({
       data: {
         titulo,
         descricao,
@@ -95,65 +80,47 @@ export async function criarPontoTuristico(formData) {
         categoria,
         publicado: true,
         fotos: {
-          create: fotosUrls.map((url) => ({
-            url,
-          })),
+          create: fotosUrls.map((url) => ({ url })),
         },
       },
     });
 
     revalidarPonto(pontoCriado.id, pontoCriado.categoria);
+
+    return { success: true };
   } catch (error) {
     console.error("Erro ao criar ponto turístico:", error);
-    throw new Error(
-      error.message || "Não foi possível criar o ponto turístico.",
-    );
+    throw new Error(error.message || "Não foi possível criar o ponto turístico.");
   }
-
-  redirect("/admin/pontos");
 }
+
 export async function excluirPonto(id) {
   try {
     const pontoId = Number(id);
 
     if (Number.isNaN(pontoId)) {
-      return {
-        error: "Ponto turístico inválido.",
-      };
+      return { error: "Ponto turístico inválido." };
     }
 
     const ponto = await prisma.pontoTuristico.findUnique({
-      where: {
-        id: pontoId,
-      },
-      include: {
-        fotos: true,
-      },
+      where: { id: pontoId },
+      include: { fotos: true },
     });
 
     if (!ponto) {
-      return {
-        error: "Ponto turístico não encontrado.",
-      };
+      return { error: "Ponto turístico não encontrado." };
     }
 
     await prisma.pontoTuristico.delete({
-      where: {
-        id: pontoId,
-      },
+      where: { id: pontoId },
     });
 
     revalidarPonto(pontoId, ponto.categoria);
 
-    return {
-      success: "Ponto turístico excluído com sucesso.",
-    };
+    return { success: "Ponto turístico excluído com sucesso." };
   } catch (error) {
     console.error("Erro ao excluir ponto turístico:", error);
-
-    return {
-      error: "Não foi possível excluir o ponto turístico.",
-    };
+    return { error: "Não foi possível excluir o ponto turístico." };
   }
 }
 
@@ -171,7 +138,6 @@ export async function editarPonto(id, formData) {
     const endereco = String(formData.get("endereco") || "").trim();
     const categoria = String(formData.get("categoria") || "").trim();
     const publicado = formData.get("publicado") === "on";
-
     const imagemFile = formData.get("imagem");
 
     if (!titulo || !descricao || !conteudo || !categoria) {
@@ -192,18 +158,14 @@ export async function editarPonto(id, formData) {
     }
 
     const ponto = await prisma.pontoTuristico.update({
-      where: {
-        id: pontoId,
-      },
+      where: { id: pontoId },
       data,
     });
 
     revalidarPonto(ponto.id, ponto.categoria);
   } catch (error) {
     console.error("Erro ao editar ponto turístico:", error);
-    throw new Error(
-      error.message || "Não foi possível editar o ponto turístico.",
-    );
+    throw new Error(error.message || "Não foi possível editar o ponto turístico.");
   }
 
   redirect("/admin/pontos");
