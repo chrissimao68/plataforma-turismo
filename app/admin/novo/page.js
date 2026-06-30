@@ -1,3 +1,7 @@
+"use client"
+
+import { useState } from "react"
+import { upload } from "@vercel/blob/client"
 import { criarPontoTuristico } from "@/app/actions/pontos"
 import {
   MapPin,
@@ -8,6 +12,74 @@ import {
 } from "lucide-react"
 
 export default function NovoPontoPage() {
+  const [enviando, setEnviando] = useState(false)
+
+  async function enviarImagem(file, pasta) {
+    if (!file || file.size === 0) return null
+
+    const nomeSeguro = file.name
+      .replace(/\.[^/.]+$/, "")
+      .replaceAll(" ", "-")
+      .toLowerCase()
+      .replace(/[^a-z0-9-_]/g, "")
+
+    const extensao = file.name.split(".").pop()?.toLowerCase() || "jpg"
+
+    const blob = await upload(
+      `${pasta}/${Date.now()}-${crypto.randomUUID()}-${nomeSeguro || "imagem"}.${extensao}`,
+      file,
+      {
+        access: "public",
+        handleUploadUrl: "/api/blob/upload",
+      }
+    )
+
+    return blob.url
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    setEnviando(true)
+
+    try {
+      const form = event.currentTarget
+      const formDataOriginal = new FormData(form)
+
+      const imagemFile = formDataOriginal.get("imagem")
+      const fotosFiles = formDataOriginal
+        .getAll("fotos")
+        .filter((file) => file && file.size > 0)
+
+      const imagemUrl = await enviarImagem(imagemFile, "pontos/principal")
+
+      const fotosUrls = []
+
+      for (const foto of fotosFiles) {
+        const url = await enviarImagem(foto, "pontos/galeria")
+        if (url) fotosUrls.push(url)
+      }
+
+      const formData = new FormData()
+
+      formData.set("titulo", formDataOriginal.get("titulo"))
+      formData.set("descricao", formDataOriginal.get("descricao"))
+      formData.set("conteudo", formDataOriginal.get("conteudo"))
+      formData.set("endereco", formDataOriginal.get("endereco"))
+      formData.set("categoria", formDataOriginal.get("categoria"))
+      formData.set("imagemUrl", imagemUrl || "")
+
+      fotosUrls.forEach((url) => {
+        formData.append("fotosUrls", url)
+      })
+
+      await criarPontoTuristico(formData)
+    } catch (error) {
+      console.error(error)
+      alert(error.message || "Erro ao criar ponto turístico.")
+      setEnviando(false)
+    }
+  }
+
   return (
     <main className="w-full px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
       <div className="mx-auto w-full max-w-4xl">
@@ -28,7 +100,7 @@ export default function NovoPontoPage() {
         </div>
 
         <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:rounded-3xl sm:p-8">
-          <form action={criarPontoTuristico} className="space-y-5 sm:space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             <FormField label="Título">
               <input
                 name="titulo"
@@ -104,10 +176,7 @@ export default function NovoPontoPage() {
 
             <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-950 sm:p-5">
               <div className="mb-4 flex items-center gap-2">
-                <Camera
-                  size={20}
-                  className="text-blue-600 dark:text-blue-400"
-                />
+                <Camera size={20} className="text-blue-600 dark:text-blue-400" />
 
                 <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
                   Galeria de Fotos
@@ -130,10 +199,11 @@ export default function NovoPontoPage() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-700 px-6 py-3 font-semibold text-white shadow-sm transition-all hover:bg-green-800 hover:shadow-md active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-500 sm:w-auto sm:px-8"
+                disabled={enviando}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-700 px-6 py-3 font-semibold text-white shadow-sm transition-all hover:bg-green-800 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-green-600 dark:hover:bg-green-500 sm:w-auto sm:px-8"
               >
                 <Save size={18} />
-                Criar Página
+                {enviando ? "Enviando imagens..." : "Criar Página"}
               </button>
             </div>
           </form>

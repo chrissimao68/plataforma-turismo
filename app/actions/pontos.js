@@ -74,26 +74,15 @@ export async function criarPontoTuristico(formData) {
     const endereco = String(formData.get("endereco") || "").trim();
     const categoria = String(formData.get("categoria") || "").trim();
 
-    const imagemFile = formData.get("imagem");
+    const imagem = String(formData.get("imagemUrl") || "").trim();
 
-    if (!titulo || !descricao || !conteudo || !categoria) {
+    const fotosUrls = formData
+      .getAll("fotosUrls")
+      .map((url) => String(url || "").trim())
+      .filter(Boolean);
+
+    if (!titulo || !descricao || !conteudo || !categoria || !imagem) {
       throw new Error("Preencha os campos obrigatórios.");
-    }
-
-    const imagem = await uploadImagem(imagemFile, "pontos/principal");
-
-    const fotosFiles = formData
-      .getAll("fotos")
-      .filter((file) => file instanceof File && file.size > 0);
-
-    const fotosUrls = [];
-
-    for (const foto of fotosFiles) {
-      const url = await uploadImagem(foto, "pontos/galeria");
-
-      if (url) {
-        fotosUrls.push(url);
-      }
     }
 
     pontoCriado = await prisma.pontoTuristico.create({
@@ -116,12 +105,13 @@ export async function criarPontoTuristico(formData) {
     revalidarPonto(pontoCriado.id, pontoCriado.categoria);
   } catch (error) {
     console.error("Erro ao criar ponto turístico:", error);
-    throw new Error(error.message || "Não foi possível criar o ponto turístico.");
+    throw new Error(
+      error.message || "Não foi possível criar o ponto turístico.",
+    );
   }
 
   redirect("/admin/pontos");
 }
-
 export async function excluirPonto(id) {
   try {
     const pontoId = Number(id);
@@ -211,7 +201,9 @@ export async function editarPonto(id, formData) {
     revalidarPonto(ponto.id, ponto.categoria);
   } catch (error) {
     console.error("Erro ao editar ponto turístico:", error);
-    throw new Error(error.message || "Não foi possível editar o ponto turístico.");
+    throw new Error(
+      error.message || "Não foi possível editar o ponto turístico.",
+    );
   }
 
   redirect("/admin/pontos");
