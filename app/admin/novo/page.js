@@ -64,7 +64,7 @@ export default function NovoPontoPage() {
       formData.set("titulo", formDataOriginal.get("titulo"))
       formData.set("descricao", formDataOriginal.get("descricao"))
       formData.set("conteudo", formDataOriginal.get("conteudo"))
-      formData.set("endereco", formDataOriginal.get("endereco"))
+      formData.set("endereco", formDataOriginal.get("endereco") || "")
       formData.set("categoria", formDataOriginal.get("categoria"))
       formData.set("imagemUrl", imagemUrl || "")
 
@@ -72,7 +72,14 @@ export default function NovoPontoPage() {
         formData.append("fotosUrls", url)
       })
 
-      await criarPontoTuristico(formData)
+      const result = await criarPontoTuristico(formData)
+
+      if (result?.success) {
+        window.location.href = "/admin/pontos"
+        return
+      }
+
+      setEnviando(false)
     } catch (error) {
       console.error(error)
       alert(error.message || "Erro ao criar ponto turístico.")
