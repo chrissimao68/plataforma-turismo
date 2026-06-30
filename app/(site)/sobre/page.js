@@ -83,7 +83,7 @@ export default function SobrePage() {
 
           <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:rounded-3xl">
             <img
-              src="/lavras/praca-lavras.jpg"
+              src="/sobrepraça.png"
               alt="Praça em Lavras"
               className="h-48 w-full object-cover sm:h-64"
             />
