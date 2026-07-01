@@ -102,13 +102,13 @@ export default async function HomePage() {
     bg-[url('/fotocapaescura.png')]
     bg-cover bg-center
     text-white
-    dark:bg-[url('/fotodecapadark.png')]
+    dark:bg-[url('/novo.png')]
     sm:min-h-[640px]
     lg:min-h-[720px]
   "
 >
-  <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/45 to-black/80" />
-  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
+  <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/25 to-black/40" />
+  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
 
   <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-20 lg:grid-cols-2 lg:items-center lg:px-8">
     <div className="flex max-w-2xl flex-col gap-6 sm:gap-8">
