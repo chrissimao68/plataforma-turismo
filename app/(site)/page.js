@@ -99,7 +99,7 @@ export default async function HomePage() {
 <section
   className="
     relative flex min-h-[560px] items-center overflow-hidden
-    bg-[url('/fotocapaescura.png')]
+    bg-[url('/novo.png')]
     bg-cover bg-center
     text-white
     dark:bg-[url('/novo.png')]
