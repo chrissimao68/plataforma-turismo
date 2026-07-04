@@ -223,7 +223,7 @@ export default async function HomePage() {
           </div>
 
           <Link
-            href="/natureza"
+            href="/todos-pontos"
             className="inline-flex items-center gap-2 font-semibold text-green-700 transition hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
           >
             Ver mais
