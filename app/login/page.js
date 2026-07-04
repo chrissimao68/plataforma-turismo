@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { loginAdmin, cadastrarAdmin } from "@/app/actions/auth"
+import { useState } from "react";
+import { loginAdmin, cadastrarAdmin } from "@/app/actions/auth";
 import {
   Lock,
   User,
@@ -11,43 +11,45 @@ import {
   Star,
   LogIn,
   ShieldCheck,
-} from "lucide-react"
-import { toast } from "sonner"
+  Eye,
+  EyeOff,
+} from "lucide-react";
+import { toast } from "sonner";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(false)
-  const [modo, setModo] = useState("login")
+  const [loading, setLoading] = useState(false);
+  const [modo, setModo] = useState("login");
 
   async function handleSubmit(formData) {
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const result = await loginAdmin(formData)
+      const result = await loginAdmin(formData);
 
       if (result?.error) {
-        toast.error(result.error)
+        toast.error(result.error);
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   async function handleCadastro(formData) {
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const result = await cadastrarAdmin(formData)
+      const result = await cadastrarAdmin(formData);
 
       if (result?.error) {
-        toast.error(result.error)
+        toast.error(result.error);
       }
 
       if (result?.success) {
-        toast.success(result.success)
-        setModo("login")
+        toast.success(result.success);
+        setModo("login");
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -75,9 +77,7 @@ export default function LoginPage() {
                   Turismo
                 </p>
 
-                <h1 className="text-3xl font-black text-emerald-400">
-                  Lavras
-                </h1>
+                <h1 className="text-3xl font-black text-emerald-400">Lavras</h1>
               </div>
             </div>
 
@@ -228,7 +228,7 @@ export default function LoginPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
 function InfoItem({ icon, title, text }) {
@@ -243,10 +243,21 @@ function InfoItem({ icon, title, text }) {
         <p className="text-white/75">{text}</p>
       </div>
     </div>
-  )
+  );
 }
 
-function InputField({ label, icon, type, name, placeholder, minLength }) {
+function InputField({
+  label,
+  icon,
+  type,
+  name,
+  placeholder,
+  minLength,
+}) {
+  const [showPassword, setShowPassword] = useState(false)
+
+  const isPassword = type === "password"
+
   return (
     <div>
       <label className="mb-2 block text-sm font-bold text-emerald-950 dark:text-zinc-200">
@@ -254,16 +265,32 @@ function InputField({ label, icon, type, name, placeholder, minLength }) {
       </label>
 
       <div className="flex items-center gap-3 rounded-xl bg-white/90 px-4 py-3.5 shadow-sm ring-1 ring-black/5 transition focus-within:ring-2 focus-within:ring-emerald-600 dark:bg-zinc-900 dark:ring-white/10 dark:focus-within:ring-emerald-500 sm:py-4">
-        <div className="text-zinc-500 dark:text-zinc-400">{icon}</div>
+        <div className="text-zinc-500 dark:text-zinc-400">
+          {icon}
+        </div>
 
         <input
-          type={type}
+          type={isPassword ? (showPassword ? "text" : "password") : type}
           name={name}
           minLength={minLength}
           required
           className="w-full bg-transparent text-emerald-950 outline-none placeholder:text-zinc-500 dark:text-zinc-100 dark:placeholder:text-zinc-500"
           placeholder={placeholder}
         />
+
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="text-zinc-500 hover:text-emerald-600 transition"
+          >
+            {showPassword ? (
+              <EyeOff size={20} />
+            ) : (
+              <Eye size={20} />
+            )}
+          </button>
+        )}
       </div>
     </div>
   )
