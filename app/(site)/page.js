@@ -46,7 +46,7 @@ export default async function HomePage() {
       titulo: "Cultura",
       descricao: "História, museus e patrimônio cultural.",
       href: "/cultura",
-      imagem: "/cultucapa.jpg",
+      imagem: "/culturacapa.png",
       cor: "bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700",
       corIcone:
         "text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700",

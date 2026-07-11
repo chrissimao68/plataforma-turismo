@@ -49,7 +49,7 @@ export default async function CulturaPage() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-zinc-50 text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
-      <section className="relative min-h-[380px] overflow-hidden bg-[url('/cultucapa.jpg')] bg-cover bg-center sm:min-h-[430px] lg:min-h-[460px]">
+      <section className="relative min-h-[380px] overflow-hidden bg-[url('/culturacapa.png')] bg-cover bg-center sm:min-h-[430px] lg:min-h-[460px]">
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/45 to-black/75" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
 
