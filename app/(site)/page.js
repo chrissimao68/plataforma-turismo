@@ -132,12 +132,7 @@ export default async function HomePage() {
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <Link
-          href="/natureza"
-          className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-bold text-green-800 shadow-lg transition hover:bg-green-100 sm:px-6 sm:text-base dark:bg-zinc-100 dark:text-green-900 dark:hover:bg-white"
-        >
-          Planeje sua viagem
-        </Link>
+       
 
         <ModeloModal />
       </div>
